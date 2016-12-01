@@ -1,0 +1,120 @@
+TAP version 13
+# Subtest: load good config
+    1..2
+    not ok 1 - TypeError: _.deepClone is not a function
+      ---
+      at:
+        line: 159
+        column: 65
+        file: /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js
+      stack: >
+        /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:159:65
+
+        arrayEach
+        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/node_modules/lodash/lodash.js:537:11)
+
+        Function.forEach
+        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/node_modules/lodash/lodash.js:9344:14)
+
+        expandContainers
+        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:114:9)
+
+        /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:207:7
+
+        validateInput
+        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:88:5)
+
+        Object.load
+        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:203:5)
+
+        test.load.js:25:10
+
+        Object.<anonymous> (test.load.js:22:1)
+      test: load good config
+      message: 'TypeError: _.deepClone is not a function'
+      source: >
+        system.topology.containers[key].environment = _.merge(_.deepClone(sharedEnv),
+        system.topology.containers[key].environment)
+      ...
+    not ok 2 - missing test
+    # failed 2 of 2 tests
+not ok 1 - load good config # time=29.527ms
+  ---
+  at:
+    line: 22
+    column: 1
+    file: test.load.js
+  results:
+    plan:
+      start: 1
+      end: 2
+    count: 2
+    pass: 0
+    ok: false
+    fail: 2
+    time: 29.527
+  source: |
+    test('load good config', function (t) {
+  ...
+
+# Subtest: load bad config
+    1..2
+    not ok 1 - TypeError: _.deepClone is not a function
+      ---
+      at:
+        line: 159
+        column: 65
+        file: /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js
+      stack: >
+        /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:159:65
+
+        arrayEach
+        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/node_modules/lodash/lodash.js:537:11)
+
+        Function.forEach
+        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/node_modules/lodash/lodash.js:9344:14)
+
+        expandContainers
+        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:114:9)
+
+        /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:207:7
+
+        validateInput
+        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:88:5)
+
+        Object.load
+        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:203:5)
+
+        test.load.js:39:10
+
+        Object.<anonymous> (test.load.js:36:1)
+      test: load bad config
+      message: 'TypeError: _.deepClone is not a function'
+      source: >
+        system.topology.containers[key].environment = _.merge(_.deepClone(sharedEnv),
+        system.topology.containers[key].environment)
+      ...
+    not ok 2 - missing test
+    # failed 2 of 2 tests
+not ok 2 - load bad config # time=7.966ms
+  ---
+  at:
+    line: 36
+    column: 1
+    file: test.load.js
+  results:
+    plan:
+      start: 1
+      end: 2
+    count: 2
+    pass: 0
+    ok: false
+    fail: 2
+    time: 7.966
+  source: |
+    test('load bad config', function (t) {
+  ...
+
+1..2
+# failed 2 of 2 tests
+# time=99.017ms

@@ -1,0 +1,44 @@
+fuge_global: 
+  run_containers: 
+    - run
+  tail: true
+  monitor: true
+  monitor_excludes: 
+    - /node_modules|\.git|\.log/mgi,
+  dns: true
+  dns_suffix: .internal.com
+  auto_generate_environment: true
+  auto_port_start: 20000
+  environment:
+    - FUGE=ROCKS
+  host: wibble
+frontend:
+  type: process
+  path: ../frontend
+  build: 'sh build.sh'
+  test: 'npm test'
+  run: 'npm start'
+  environment:
+    - ONE=TWO
+  host: bibble
+  ports:
+    - main=10000
+    - tcp=100001
+service:
+  type: process
+  path: ../service
+  build: 'sh build.sh'
+  test: 'npm test'
+  run: 'npm start'
+  environment:
+    - ONE=TWO
+    - FUGE=DOUBLEROCKS
+mongo:
+  type: container
+  image: mongodb
+  run: 'docker run -e -p'
+  environment:
+    - ONE=TWO
+  ports:
+    - http=1000080
+
