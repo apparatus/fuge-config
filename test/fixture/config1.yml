@@ -22,8 +22,8 @@ frontend:
     - ONE=TWO
   host: bibble
   ports:
-    - main=10000
-    - tcp=100001
+    - main=3000
+    - tcp=3001
 service:
   type: process
   path: ../service

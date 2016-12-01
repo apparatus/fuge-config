@@ -39,14 +39,9 @@ var schemas = require('./schemas')
  */
 /*
  * todo:
- *
- * dns defer until after book is complete
- *
  * - generate dns lookups based on settings here also
-        var resolved = path.resolve(path.dirname(yamlPath), v[0]);
-        load as system.topology.containers
-- complete unit tests - more stringent test cases
-*/
+ * - complete unit tests - more stringent test cases
+ */
 
 module.exports = function () {
 

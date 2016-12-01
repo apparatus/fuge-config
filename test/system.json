@@ -1,120 +1,127 @@
-TAP version 13
-# Subtest: load good config
-    1..2
-    not ok 1 - TypeError: _.deepClone is not a function
-      ---
-      at:
-        line: 159
-        column: 65
-        file: /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js
-      stack: >
-        /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:159:65
-
-        arrayEach
-        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/node_modules/lodash/lodash.js:537:11)
-
-        Function.forEach
-        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/node_modules/lodash/lodash.js:9344:14)
-
-        expandContainers
-        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:114:9)
-
-        /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:207:7
-
-        validateInput
-        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:88:5)
-
-        Object.load
-        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:203:5)
-
-        test.load.js:25:10
-
-        Object.<anonymous> (test.load.js:22:1)
-      test: load good config
-      message: 'TypeError: _.deepClone is not a function'
-      source: >
-        system.topology.containers[key].environment = _.merge(_.deepClone(sharedEnv),
-        system.topology.containers[key].environment)
-      ...
-    not ok 2 - missing test
-    # failed 2 of 2 tests
-not ok 1 - load good config # time=29.527ms
-  ---
-  at:
-    line: 22
-    column: 1
-    file: test.load.js
-  results:
-    plan:
-      start: 1
-      end: 2
-    count: 2
-    pass: 0
-    ok: false
-    fail: 2
-    time: 29.527
-  source: |
-    test('load good config', function (t) {
-  ...
-
-# Subtest: load bad config
-    1..2
-    not ok 1 - TypeError: _.deepClone is not a function
-      ---
-      at:
-        line: 159
-        column: 65
-        file: /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js
-      stack: >
-        /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:159:65
-
-        arrayEach
-        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/node_modules/lodash/lodash.js:537:11)
-
-        Function.forEach
-        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/node_modules/lodash/lodash.js:9344:14)
-
-        expandContainers
-        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:114:9)
-
-        /Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:207:7
-
-        validateInput
-        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:88:5)
-
-        Object.load
-        (/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/index.js:203:5)
-
-        test.load.js:39:10
-
-        Object.<anonymous> (test.load.js:36:1)
-      test: load bad config
-      message: 'TypeError: _.deepClone is not a function'
-      source: >
-        system.topology.containers[key].environment = _.merge(_.deepClone(sharedEnv),
-        system.topology.containers[key].environment)
-      ...
-    not ok 2 - missing test
-    # failed 2 of 2 tests
-not ok 2 - load bad config # time=7.966ms
-  ---
-  at:
-    line: 36
-    column: 1
-    file: test.load.js
-  results:
-    plan:
-      start: 1
-      end: 2
-    count: 2
-    pass: 0
-    ok: false
-    fail: 2
-    time: 7.966
-  source: |
-    test('load bad config', function (t) {
-  ...
-
-1..2
-# failed 2 of 2 tests
-# time=99.017ms
+{
+  "global": {
+    "run_containers": [
+      "run"
+    ],
+    "tail": true,
+    "monitor": true,
+    "monitor_excludes": [
+      "/node_modules|\\.git|\\.log/mgi,"
+    ],
+    "dns": true,
+    "dns_suffix": ".internal.com",
+    "auto_generate_environment": true,
+    "auto_port_start": 20000,
+    "environment": {
+      "FUGE": "ROCKS"
+    },
+    "host": "wibble",
+    "dns_prefix": ""
+  },
+  "topology": {
+    "containers": {
+      "frontend": {
+        "type": "process",
+        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/frontend",
+        "build": "sh build.sh",
+        "test": "npm test",
+        "run": "npm start",
+        "environment": {
+          "frontend_SERVICE_HOST": "bibble",
+          "frontend_SERVICE_main_PORT": "3000",
+          "frontend_SERVICE_PORT": "3000",
+          "frontend_SERVICE_tcp_PORT": "3001",
+          "service_SERVICE_HOST": "wibble",
+          "service_SERVICE_main_PORT": "20000",
+          "service_SERVICE_PORT": "20000",
+          "mongo_SERVICE_HOST": "wibble",
+          "mongo_SERVICE_http_PORT": "1000080",
+          "mongo_SERVICE_PORT": "1000080",
+          "FUGE": "ROCKS",
+          "ONE": "TWO",
+          "SERVICE_HOST": "bibble",
+          "SERVICE_main_PORT": "3000",
+          "SERVICE_PORT": "3000",
+          "SERVICE_tcp_PORT": "3001"
+        },
+        "host": "bibble",
+        "ports": {
+          "main": [
+            "3000",
+            null
+          ],
+          "tcp": [
+            "3001",
+            null
+          ]
+        },
+        "name": "frontend",
+        "specific": {}
+      },
+      "service": {
+        "type": "process",
+        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/service",
+        "build": "sh build.sh",
+        "test": "npm test",
+        "run": "npm start",
+        "environment": {
+          "frontend_SERVICE_HOST": "bibble",
+          "frontend_SERVICE_main_PORT": "3000",
+          "frontend_SERVICE_PORT": "3000",
+          "frontend_SERVICE_tcp_PORT": "3001",
+          "service_SERVICE_HOST": "wibble",
+          "service_SERVICE_main_PORT": "20000",
+          "service_SERVICE_PORT": "20000",
+          "mongo_SERVICE_HOST": "wibble",
+          "mongo_SERVICE_http_PORT": "1000080",
+          "mongo_SERVICE_PORT": "1000080",
+          "FUGE": "DOUBLEROCKS",
+          "ONE": "TWO",
+          "SERVICE_HOST": "wibble",
+          "SERVICE_main_PORT": "20000",
+          "SERVICE_PORT": "20000"
+        },
+        "name": "service",
+        "specific": {},
+        "ports": {
+          "main": [
+            "20000",
+            null
+          ]
+        },
+        "host": "wibble"
+      },
+      "mongo": {
+        "type": "container",
+        "image": "mongodb",
+        "run": "docker run -e -p",
+        "environment": {
+          "frontend_SERVICE_HOST": "bibble",
+          "frontend_SERVICE_main_PORT": "3000",
+          "frontend_SERVICE_PORT": "3000",
+          "frontend_SERVICE_tcp_PORT": "3001",
+          "service_SERVICE_HOST": "wibble",
+          "service_SERVICE_main_PORT": "20000",
+          "service_SERVICE_PORT": "20000",
+          "mongo_SERVICE_HOST": "wibble",
+          "mongo_SERVICE_http_PORT": "1000080",
+          "mongo_SERVICE_PORT": "1000080",
+          "FUGE": "ROCKS",
+          "ONE": "TWO",
+          "SERVICE_HOST": "wibble",
+          "SERVICE_http_PORT": "1000080",
+          "SERVICE_PORT": "1000080"
+        },
+        "ports": {
+          "http": [
+            "1000080",
+            null
+          ]
+        },
+        "name": "mongo",
+        "specific": {},
+        "host": "wibble"
+      }
+    }
+  }
+}
