@@ -1,0 +1,7 @@
+fuge_global: 
+  run_containers: false
+  tail: true
+  monitor: true
+  monitor_excludes: 
+    /node_modules|\.git|\.log/mgi,
+asdf

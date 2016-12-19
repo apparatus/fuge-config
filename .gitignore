@@ -13,6 +13,7 @@ results
 node_modules
 npm-debug.log
 mochahelper.js
+.nyc_output/
 .idea/
 .settings/
 dist

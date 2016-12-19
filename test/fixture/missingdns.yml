@@ -5,8 +5,6 @@ fuge_global:
   monitor_excludes: 
     - /node_modules|\.git|\.log/mgi,
   dns_enabled: true
-  dns_namespace: testns
-  dns_suffix: svc.cluster.local
   auto_generate_environment: true
   auto_port_start: 20000
   environment:

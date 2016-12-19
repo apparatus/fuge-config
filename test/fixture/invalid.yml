@@ -1,12 +1,12 @@
 fuge_global: 
-  run_containers: false
+  run_containers: asdf
   tail: true
   monitor: true
   monitor_excludes: 
     - /node_modules|\.git|\.log/mgi,
   dns_enabled: true
-  dns_namespace: testns
   dns_suffix: svc.cluster.local
+  dns_namespace: testns
   auto_generate_environment: true
   auto_port_start: 20000
   environment:
@@ -14,10 +14,11 @@ fuge_global:
   host: wibble
   delay_start: 1
   restart_on_error: true
+  max_restarts: 5
 frontend:
   delay_start: 5
-  type: process
-  path: ./frontend
+  type: fish
+  path: ./fishwibble
   build: 'sh build.sh'
   test: 'npm test'
   run: 'npm start'
@@ -27,22 +28,3 @@ frontend:
   ports:
     - main=3000
     - tcp=3001
-service:
-  type: process
-  path: ./service
-  build: 'sh build.sh'
-  test: 'npm test'
-  run: 'npm start'
-  environment:
-    - ONE=TWO
-    - FUGE=DOUBLEROCKS
-mongo:
-  type: container
-  image: mongodb
-  auto_generate_environment: false
-  dns_enabled: false
-  dns_namespace: mongo
-  run: 'docker run -e -p'
-  ports:
-    - http=1000080
-

@@ -5,15 +5,16 @@ fuge_global:
   monitor_excludes: 
     - /node_modules|\.git|\.log/mgi,
   dns_enabled: true
-  dns_namespace: testns
   dns_suffix: svc.cluster.local
-  auto_generate_environment: true
+  dns_namespace: testns
+  auto_generate_environment: false
   auto_port_start: 20000
   environment:
     - FUGE=ROCKS
   host: wibble
   delay_start: 1
   restart_on_error: true
+  max_restarts: 5
 frontend:
   delay_start: 5
   type: process
@@ -39,8 +40,6 @@ service:
 mongo:
   type: container
   image: mongodb
-  auto_generate_environment: false
-  dns_enabled: false
   dns_namespace: mongo
   run: 'docker run -e -p'
   ports:

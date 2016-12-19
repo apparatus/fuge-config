@@ -18,13 +18,7 @@ module.exports.globalSchema = {
   title: 'Global Schema',
   type: 'object',
   properties: {
-    run_containers: {
-      type: 'array',
-      items: {
-        type: 'string',
-        enum: ['build', 'test', 'run']
-      }
-    },
+    run_containers: { type: 'boolean' },
     host: { type: 'string' },
     tail: { type: 'boolean' },
     monitor: { type: 'boolean' },
@@ -40,6 +34,9 @@ module.exports.globalSchema = {
     dns_suffix: { type: 'string' },
     auto_generate_environment: { type: 'boolean' },
     auto_port_start: { type: 'integer' },
+    delay_start: { type: 'integer' },
+    restart_on_error: { type: 'boolean' },
+    max_restarts: { type: 'integer' },
     environment: {
       type: 'array',
       items: {
@@ -59,11 +56,22 @@ module.exports.containerSchema = {
       enum: ['process', 'container']
     },
     host: { type: 'string' },
+    tail: { type: 'boolean' },
+    monitor: { type: 'boolean' },
+    monitor_excludes: {
+      type: 'array',
+      items: {
+        type: 'string'
+      }
+    },
     path: { type: 'string' },
     image: { type: 'string' },
     build: { type: 'string' },
     test: { type: 'string' },
     run: { type: 'string' },
+    delay_start: { type: 'integer' },
+    restart_on_error: { type: 'boolean' },
+    max_restarts: { type: 'integer' },
     environment: {
       type: 'array',
       items: {

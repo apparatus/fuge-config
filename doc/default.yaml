@@ -4,10 +4,7 @@
 fuge_global: 
 
   # run docker containers at the specified phases (or false)
-  run_containers: 
-    - build
-    - test
-    - run
+  run_containers: false
 
   # tail process output by default
   tail: true
@@ -27,10 +24,19 @@ fuge_global:
 
   # auto generate environment variables for simple service discovery
   auto_generate_environment: true 
+  auto_port_start: 10000
 
   # global environment variables set in all processes
   envrionment:
     - FUGE=ROCKS    # global environment variables
+
+  # delay before starting a process
+  delay_start: 0
+
+  # restart a process on error - overrideaable defaults to false
+  restart_on_error: true
+  maximum_restarts: 5
+  
 
 # services
 frontend:
@@ -40,6 +46,9 @@ frontend:
   build: 'sh build.sh'     # to enable build all services
   test: 'npm test'         # to enable test all services
   run: 'npm start'         # to enable run all services
+  delay_start: 0
+  restart_on_error: true
+  maximum_restarts: 5
   environment:
     - ONE=TWO              # environment for this process, overrides any global values
   ports:
