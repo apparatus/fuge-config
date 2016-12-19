@@ -42,6 +42,7 @@ mongo:
   auto_generate_environment: false
   dns_enabled: false
   dns_namespace: mongo
+  dns_suffix: local
   run: 'docker run -e -p'
   ports:
     - http=1000080

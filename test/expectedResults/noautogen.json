@@ -1,0 +1,142 @@
+{
+  "global": {
+    "run_containers": false,
+    "tail": true,
+    "monitor": true,
+    "monitor_excludes": [
+      "/node_modules|\\.git|\\.log/mgi,"
+    ],
+    "dns_enabled": true,
+    "dns_suffix": "svc.cluster.local",
+    "dns_namespace": "testns",
+    "auto_generate_environment": false,
+    "auto_port_start": 20000,
+    "environment": {
+      "FUGE": "ROCKS"
+    },
+    "host": "wibble",
+    "delay_start": 1,
+    "restart_on_error": true,
+    "max_restarts": 5,
+    "dns": {
+      "A": {
+        "frontend.testns.svc.cluster.local": {
+          "address": "bibble"
+        },
+        "mongo.testns.svc.cluster.local": {
+          "address": "wibble"
+        }
+      },
+      "SRV": {
+        "_main._tcp.frontend.testns.svc.cluster.local": {
+          "address": "bibble",
+          "port": "3000"
+        },
+        "_tcp._tcp.frontend.testns.svc.cluster.local": {
+          "address": "bibble",
+          "port": "3001"
+        },
+        "_http._tcp.mongo.testns.svc.cluster.local": {
+          "address": "wibble",
+          "port": "1000080"
+        }
+      }
+    }
+  },
+  "topology": {
+    "containers": {
+      "frontend": {
+        "delay_start": 5,
+        "type": "process",
+        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/frontend",
+        "build": "sh build.sh",
+        "test": "npm test",
+        "run": "npm start",
+        "environment": {
+          "FUGE": "ROCKS",
+          "ONE": "TWO"
+        },
+        "host": "bibble",
+        "ports": {
+          "main": [
+            "3000",
+            null
+          ],
+          "tcp": [
+            "3001",
+            null
+          ]
+        },
+        "name": "frontend",
+        "specific": {},
+        "tail": true,
+        "monitor": true,
+        "monitor_excludes": [
+          "/node_modules|\\.git|\\.log/mgi,"
+        ],
+        "restart_on_error": true,
+        "max_restarts": 5,
+        "auto_generate_environment": false,
+        "dns_suffix": "svc.cluster.local",
+        "dns_namespace": "testns",
+        "dns_enabled": true
+      },
+      "service": {
+        "type": "process",
+        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/service",
+        "build": "sh build.sh",
+        "test": "npm test",
+        "run": "npm start",
+        "environment": {
+          "FUGE": "DOUBLEROCKS",
+          "ONE": "TWO"
+        },
+        "name": "service",
+        "specific": {},
+        "ports": {},
+        "host": "wibble",
+        "tail": true,
+        "monitor": true,
+        "monitor_excludes": [
+          "/node_modules|\\.git|\\.log/mgi,"
+        ],
+        "delay_start": 1,
+        "restart_on_error": true,
+        "max_restarts": 5,
+        "auto_generate_environment": false,
+        "dns_suffix": "svc.cluster.local",
+        "dns_namespace": "testns",
+        "dns_enabled": true
+      },
+      "mongo": {
+        "type": "container",
+        "image": "mongodb",
+        "dns_namespace": "mongo",
+        "run": "docker run -e -p",
+        "ports": {
+          "http": [
+            "1000080",
+            null
+          ]
+        },
+        "name": "mongo",
+        "specific": {},
+        "environment": {
+          "FUGE": "ROCKS"
+        },
+        "host": "wibble",
+        "tail": true,
+        "monitor": true,
+        "monitor_excludes": [
+          "/node_modules|\\.git|\\.log/mgi,"
+        ],
+        "delay_start": 1,
+        "restart_on_error": true,
+        "max_restarts": 5,
+        "auto_generate_environment": false,
+        "dns_suffix": "svc.cluster.local",
+        "dns_enabled": true
+      }
+    }
+  }
+}

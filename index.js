@@ -185,12 +185,23 @@ module.exports = function () {
           system.topology.containers[key].max_restarts = system.global.max_restarts
         }
 
+
         // auto generate environment block for this container if required
         if (!system.topology.containers[key].hasOwnProperty('auto_generate_environment')) {
           system.topology.containers[key].auto_generate_environment = system.global.auto_generate_environment
         }
         if (system.topology.containers[key].auto_generate_environment) {
           kubeEnv.generateEnvForContainer(system, key, sharedEnv)
+        }
+
+        // set dns suffix for this container to global default if not set
+        if (!system.topology.containers[key].dns_suffix) {
+          system.topology.containers[key].dns_suffix = system.global.dns_suffix
+        }
+
+        // set dns namespace for this container to global default if not set
+        if (!system.topology.containers[key].dns_namespace) {
+          system.topology.containers[key].dns_namespace = system.global.dns_namespace
         }
 
         // generate dns entries for this container if required

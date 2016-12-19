@@ -22,7 +22,7 @@ var loader = require('../index.js')()
 test('load good config', function (t) {
   t.plan(2)
 
-  var expected = require(path.join(__dirname, '/results/config1.json'))
+  var expected = require(path.join(__dirname, '/expectedResults/config1.json'))
   loader.load(path.join(__dirname, '/fixture/config1.yml'), function (err, system) {
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
@@ -33,7 +33,7 @@ test('load good config', function (t) {
 test('load blank config', function (t) {
   t.plan(2)
 
-  var expected = require(path.join(__dirname, '/results/blank.json'))
+  var expected = require(path.join(__dirname, '/expectedResults/blank.json'))
   loader.load(path.join(__dirname, '/fixture/blank.yml'), function (err, system) {
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
@@ -44,7 +44,7 @@ test('load blank config', function (t) {
 test('load config with no autogeneration of environment', function (t) {
   t.plan(2)
 
-  var expected = require(path.join(__dirname, '/results/noauto.json'))
+  var expected = require(path.join(__dirname, '/expectedResults/noautogen.json'))
   loader.load(path.join(__dirname, '/fixture/noautogen.yml'), function (err, system) {
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
@@ -55,7 +55,7 @@ test('load config with no autogeneration of environment', function (t) {
 test('load config with no default overrides', function (t) {
   t.plan(2)
 
-  var expected = require(path.join(__dirname, '/results/nodefaults.json'))
+  var expected = require(path.join(__dirname, '/expectedResults/nodefaults.json'))
   loader.load(path.join(__dirname, '/fixture/nodefaults.yml'), function (err, system) {
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
@@ -66,13 +66,12 @@ test('load config with no default overrides', function (t) {
 test('test missing dns settings', function (t) {
   t.plan(2)
 
-  var expected = require(path.join(__dirname, '/results/missingdns.json'))
+  var expected = require(path.join(__dirname, '/expectedResults/missingdns.json'))
   loader.load(path.join(__dirname, '/fixture/missingdns.yml'), function (err, system) {
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
   })
 })
-
 
 
 test('load nonparseable config', function (t) {

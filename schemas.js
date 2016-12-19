@@ -29,8 +29,8 @@ module.exports.globalSchema = {
       }
 
     },
-    dns: { type: 'boolean' },
-    dns_prefix: { type: 'string' },
+    dns_enabled: { type: 'boolean' },
+    dns_namespace: { type: 'string' },
     dns_suffix: { type: 'string' },
     auto_generate_environment: { type: 'boolean' },
     auto_port_start: { type: 'integer' },
@@ -64,6 +64,10 @@ module.exports.containerSchema = {
         type: 'string'
       }
     },
+    dns_enabled: { type: 'boolean' },
+    dns_namespace: { type: 'string' },
+    dns_suffix: { type: 'string' },
+    auto_generate_environment: { type: 'boolean' },
     path: { type: 'string' },
     image: { type: 'string' },
     build: { type: 'string' },

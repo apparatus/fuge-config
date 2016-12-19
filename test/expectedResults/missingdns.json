@@ -1,0 +1,201 @@
+{
+  "global": {
+    "run_containers": false,
+    "tail": true,
+    "monitor": true,
+    "monitor_excludes": [
+      "/node_modules|\\.git|\\.log/mgi,"
+    ],
+    "dns_enabled": true,
+    "auto_generate_environment": true,
+    "auto_port_start": 20000,
+    "environment": {
+      "FUGE": "ROCKS"
+    },
+    "host": "wibble",
+    "delay_start": 1,
+    "restart_on_error": true,
+    "dns_suffix": "",
+    "dns_namespace": "",
+    "max_restarts": 5,
+    "dns": {
+      "A": {
+        "frontend": {
+          "address": "bibble"
+        },
+        "service": {
+          "address": "wibble"
+        }
+      },
+      "SRV": {
+        "_main._tcp.frontend": {
+          "address": "bibble",
+          "port": "3000"
+        },
+        "_tcp._tcp.frontend": {
+          "address": "bibble",
+          "port": "3001"
+        },
+        "_main._tcp.service": {
+          "address": "wibble",
+          "port": "20000"
+        }
+      }
+    }
+  },
+  "topology": {
+    "containers": {
+      "frontend": {
+        "delay_start": 5,
+        "type": "process",
+        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/frontend",
+        "build": "sh build.sh",
+        "test": "npm test",
+        "run": "npm start",
+        "environment": {
+          "FRONTEND_SERVICE_HOST": "bibble",
+          "FRONTEND_SERVICE_PORT": "3000",
+          "FRONTEND_PORT": "tcp://bibble:3000",
+          "FRONTEND_PORT_3000_TCP": "tcp://bibble:3000",
+          "FRONTEND_PORT_3000_TCP_PROTO": "tcp",
+          "FRONTEND_PORT_3000_TCP_PORT": "3000",
+          "FRONTEND_PORT_3000_TCP_ADDR": "bibble",
+          "FRONTEND_PORT_3001_TCP": "tcp://bibble:3001",
+          "FRONTEND_PORT_3001_TCP_PROTO": "tcp",
+          "FRONTEND_PORT_3001_TCP_PORT": "3001",
+          "FRONTEND_PORT_3001_TCP_ADDR": "bibble",
+          "SERVICE_SERVICE_HOST": "wibble",
+          "SERVICE_SERVICE_PORT": "20000",
+          "SERVICE_PORT": "tcp://wibble:20000",
+          "SERVICE_PORT_20000_TCP": "tcp://wibble:20000",
+          "SERVICE_PORT_20000_TCP_PROTO": "tcp",
+          "SERVICE_PORT_20000_TCP_PORT": "20000",
+          "SERVICE_PORT_20000_TCP_ADDR": "wibble",
+          "FUGE": "ROCKS",
+          "ONE": "TWO"
+        },
+        "host": "bibble",
+        "ports": {
+          "main": [
+            "3000",
+            null
+          ],
+          "tcp": [
+            "3001",
+            null
+          ]
+        },
+        "name": "frontend",
+        "specific": {},
+        "tail": true,
+        "monitor": true,
+        "monitor_excludes": [
+          "/node_modules|\\.git|\\.log/mgi,"
+        ],
+        "restart_on_error": true,
+        "max_restarts": 5,
+        "auto_generate_environment": true,
+        "dns_suffix": "",
+        "dns_namespace": "",
+        "dns_enabled": true
+      },
+      "service": {
+        "type": "process",
+        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/service",
+        "build": "sh build.sh",
+        "test": "npm test",
+        "run": "npm start",
+        "environment": {
+          "FRONTEND_SERVICE_HOST": "bibble",
+          "FRONTEND_SERVICE_PORT": "3000",
+          "FRONTEND_PORT": "tcp://bibble:3000",
+          "FRONTEND_PORT_3000_TCP": "tcp://bibble:3000",
+          "FRONTEND_PORT_3000_TCP_PROTO": "tcp",
+          "FRONTEND_PORT_3000_TCP_PORT": "3000",
+          "FRONTEND_PORT_3000_TCP_ADDR": "bibble",
+          "FRONTEND_PORT_3001_TCP": "tcp://bibble:3001",
+          "FRONTEND_PORT_3001_TCP_PROTO": "tcp",
+          "FRONTEND_PORT_3001_TCP_PORT": "3001",
+          "FRONTEND_PORT_3001_TCP_ADDR": "bibble",
+          "SERVICE_SERVICE_HOST": "wibble",
+          "SERVICE_SERVICE_PORT": "20000",
+          "SERVICE_PORT": "tcp://wibble:20000",
+          "SERVICE_PORT_20000_TCP": "tcp://wibble:20000",
+          "SERVICE_PORT_20000_TCP_PROTO": "tcp",
+          "SERVICE_PORT_20000_TCP_PORT": "20000",
+          "SERVICE_PORT_20000_TCP_ADDR": "wibble",
+          "FUGE": "DOUBLEROCKS",
+          "ONE": "TWO"
+        },
+        "name": "service",
+        "specific": {},
+        "ports": {
+          "main": [
+            "20000",
+            null
+          ]
+        },
+        "host": "wibble",
+        "tail": true,
+        "monitor": true,
+        "monitor_excludes": [
+          "/node_modules|\\.git|\\.log/mgi,"
+        ],
+        "delay_start": 1,
+        "restart_on_error": true,
+        "max_restarts": 5,
+        "auto_generate_environment": true,
+        "dns_suffix": "",
+        "dns_namespace": "",
+        "dns_enabled": true
+      },
+      "mongo": {
+        "type": "container",
+        "image": "mongodb",
+        "auto_generate_environment": false,
+        "dns_enabled": false,
+        "dns_namespace": "mongo",
+        "run": "docker run -e -p",
+        "ports": {
+          "http": [
+            "1000080",
+            null
+          ]
+        },
+        "name": "mongo",
+        "specific": {},
+        "environment": {
+          "FRONTEND_SERVICE_HOST": "bibble",
+          "FRONTEND_SERVICE_PORT": "3000",
+          "FRONTEND_PORT": "tcp://bibble:3000",
+          "FRONTEND_PORT_3000_TCP": "tcp://bibble:3000",
+          "FRONTEND_PORT_3000_TCP_PROTO": "tcp",
+          "FRONTEND_PORT_3000_TCP_PORT": "3000",
+          "FRONTEND_PORT_3000_TCP_ADDR": "bibble",
+          "FRONTEND_PORT_3001_TCP": "tcp://bibble:3001",
+          "FRONTEND_PORT_3001_TCP_PROTO": "tcp",
+          "FRONTEND_PORT_3001_TCP_PORT": "3001",
+          "FRONTEND_PORT_3001_TCP_ADDR": "bibble",
+          "SERVICE_SERVICE_HOST": "wibble",
+          "SERVICE_SERVICE_PORT": "20000",
+          "SERVICE_PORT": "tcp://wibble:20000",
+          "SERVICE_PORT_20000_TCP": "tcp://wibble:20000",
+          "SERVICE_PORT_20000_TCP_PROTO": "tcp",
+          "SERVICE_PORT_20000_TCP_PORT": "20000",
+          "SERVICE_PORT_20000_TCP_ADDR": "wibble",
+          "FUGE": "ROCKS"
+        },
+        "host": "wibble",
+        "tail": true,
+        "monitor": true,
+        "monitor_excludes": [
+          "/node_modules|\\.git|\\.log/mgi,"
+        ],
+        "delay_start": 1,
+        "restart_on_error": true,
+        "max_restarts": 5,
+        "dns_suffix": ""
+      }
+    }
+  }
+}

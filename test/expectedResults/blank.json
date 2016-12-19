@@ -1,0 +1,20 @@
+{
+  "global": {
+    "run_containers": false,
+    "tail": true,
+    "monitor": true,
+    "monitor_excludes": [],
+    "dns_enabled": false,
+    "dns_suffix": "",
+    "dns_namespace": "",
+    "auto_generate_environment": true,
+    "environment": {},
+    "delay_start": 0,
+    "restart_on_error": false,
+    "max_restarts": 5,
+    "host": "localhost"
+  },
+  "topology": {
+    "containers": {}
+  }
+}

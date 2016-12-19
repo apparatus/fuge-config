@@ -1,0 +1,90 @@
+{
+  "global": {
+    "run_containers": false,
+    "tail": true,
+    "monitor": true,
+    "monitor_excludes": [
+      "/node_modules|\\.git|\\.log/mgi,"
+    ],
+    "dns_enabled": true,
+    "dns_suffix": "svc.cluster.local",
+    "dns_namespace": "testns",
+    "auto_generate_environment": true,
+    "auto_port_start": 20000,
+    "environment": {
+      "FUGE": "ROCKS"
+    },
+    "host": "wibble",
+    "delay_start": 1,
+    "restart_on_error": true,
+    "max_restarts": 5,
+    "dns": {
+      "A": {
+        "frontend.testns.svc.cluster.local": {
+          "address": "bibble"
+        }
+      },
+      "SRV": {
+        "_main._tcp.frontend.testns.svc.cluster.local": {
+          "address": "bibble",
+          "port": "3000"
+        },
+        "_tcp._tcp.frontend.testns.svc.cluster.local": {
+          "address": "bibble",
+          "port": "3001"
+        }
+      }
+    }
+  },
+  "topology": {
+    "containers": {
+      "frontend": {
+        "tail": true,
+        "monitor": true,
+        "monitor_excludes": [
+          "/node_modules|\\.git|\\.log/mgi"
+        ],
+        "restart_on_error": true,
+        "max_restarts": 5,
+        "dns_enabled": true,
+        "type": "process",
+        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/frontend",
+        "build": "sh build.sh",
+        "test": "npm test",
+        "run": "npm start",
+        "environment": {
+          "FRONTEND_SERVICE_HOST": "bibble",
+          "FRONTEND_SERVICE_PORT": "3000",
+          "FRONTEND_PORT": "tcp://bibble:3000",
+          "FRONTEND_PORT_3000_TCP": "tcp://bibble:3000",
+          "FRONTEND_PORT_3000_TCP_PROTO": "tcp",
+          "FRONTEND_PORT_3000_TCP_PORT": "3000",
+          "FRONTEND_PORT_3000_TCP_ADDR": "bibble",
+          "FRONTEND_PORT_3001_TCP": "tcp://bibble:3001",
+          "FRONTEND_PORT_3001_TCP_PROTO": "tcp",
+          "FRONTEND_PORT_3001_TCP_PORT": "3001",
+          "FRONTEND_PORT_3001_TCP_ADDR": "bibble",
+          "FUGE": "ROCKS",
+          "ONE": "TWO"
+        },
+        "host": "bibble",
+        "ports": {
+          "main": [
+            "3000",
+            null
+          ],
+          "tcp": [
+            "3001",
+            null
+          ]
+        },
+        "name": "frontend",
+        "specific": {},
+        "delay_start": 1,
+        "auto_generate_environment": true,
+        "dns_suffix": "svc.cluster.local",
+        "dns_namespace": "testns"
+      }
+    }
+  }
+}
