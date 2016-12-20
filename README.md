@@ -36,7 +36,7 @@ fuge_global:
   .
 ```
 
-Settings are provided at a global and service level. Generally any global settings may be overrided at the container / service level.
+Settings are provided at a global and service level. Generally any global settings may be overidden at the container / service level.
 
 ## Examples
 A simple example is provided below:
