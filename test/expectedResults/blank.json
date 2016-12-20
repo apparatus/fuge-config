@@ -1,6 +1,6 @@
 {
   "global": {
-    "run_containers": false,
+    "run_containers": true,
     "tail": true,
     "monitor": true,
     "monitor_excludes": [],

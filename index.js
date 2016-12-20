@@ -83,7 +83,7 @@ module.exports = function () {
 
 
   function setGlobalDefaults (system) {
-    if (!system.global.hasOwnProperty('run_containers')) { system.global.run_containers = false }
+    if (!system.global.hasOwnProperty('run_containers')) { system.global.run_containers = true }
     if (!system.global.hasOwnProperty('tail')) { system.global.tail = true }
     if (!system.global.hasOwnProperty('monitor')) { system.global.monitor = true }
     if (!system.global.hasOwnProperty('monitor_excludes')) { system.global.monitor_excludes = [] }
