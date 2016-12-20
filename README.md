@@ -38,6 +38,67 @@ fuge_global:
 
 Settings are provided at a global and service level. Generally any global settings may be overrided at the container / service level.
 
+## Examples
+A simple example is provided below:
+
+```
+fuge_global:
+  monitor_excludes:
+    - /node_modules|\.git|\.log/mgi,
+  environment:
+    - NODE_ENV=DEV
+frontend:
+  type: process
+  path: ./frontend
+  run: 'npm start'
+  ports:
+    - http=3000
+mongo:
+  type: container
+  image: mongodb
+  ports:
+    - tcp=27017:27017
+```
+
+In the simple example fuge will run a frontend process (called frontend) and a mongodb container. This might be the configuration for a monolithic mean stack application. A more complicated example follows:
+
+```
+fuge_global:
+  monitor_excludes:
+    - /node_modules|\.git|\.log/mgi,
+  dns_enabled: true
+  dns_namespace: testns
+  dns_suffix: svc.cluster.local
+  auto_generate_environment: true
+  auto_port_start: 20000
+  environment:
+    - NODE_ENV=DEV
+  host: 127.0.0.1
+frontend:
+  delay_start: 5
+  type: process
+  path: ./frontend
+  run: 'npm start'
+  ports:
+    - http=3000
+service_one:
+  type: process
+  path: ./service_one
+  run: 'npm start'
+mongo:
+  type: container
+  image: mongodb
+  auto_generate_environment: false
+  dns_enabled: false
+  ports:
+    - tcp=27017:27017
+```
+
+In the above example fuge will generate environment variables and dns entries for frontend and service_one, however it will exclude mongo from this as these settings are disabled on this container.
+
+
+## Detail
+
 ### Global Settings
 Valid global settings are as follows:
 
@@ -164,64 +225,6 @@ All of the global settings documented above may be specififed at the service lev
 </table>
     
     
-## Examples
-A simple example is provided below:
-
-```
-fuge_global:
-  monitor_excludes:
-    - /node_modules|\.git|\.log/mgi,
-  auto_generate_environment: true
-  environment:
-    - NODE_ENV=DEV
-frontend:
-  type: process
-  path: ./frontend
-  run: 'npm start'
-  ports:
-    - http=3000
-mongo:
-  type: container
-  image: mongodb
-  ports:
-    - tcp=27017:27017
-```
-
-In the simple example fuge will run a frontend process (called frontend) and a mongodb container. This might be the configuration for a monolithic mean stack application. A more complicated example follows:
-
-```
-fuge_global:
-  monitor_excludes:
-    - /node_modules|\.git|\.log/mgi,
-  dns_enabled: true
-  dns_namespace: testns
-  dns_suffix: svc.cluster.local
-  auto_generate_environment: true
-  auto_port_start: 20000
-  environment:
-    - NODE_ENV=DEV
-  host: 127.0.0.1
-frontend:
-  delay_start: 5
-  type: process
-  path: ./frontend
-  run: 'npm start'
-  ports:
-    - http=3000
-service_one:
-  type: process
-  path: ./service_one
-  run: 'npm start'
-mongo:
-  type: container
-  image: mongodb
-  auto_generate_environment: false
-  dns_enabled: false
-  ports:
-    - tcp=27017:27017
-```
-
-In the above example fuge will generate environment variables and dns entries for frontend and service_one, however it will exclude mongo from this as these settings are disabled on this container.
 
 ## License
 Copyright Peter Elger 2016 & Contributors, Licensed under [MIT][].
