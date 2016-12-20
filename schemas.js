@@ -30,6 +30,8 @@ module.exports.globalSchema = {
 
     },
     dns_enabled: { type: 'boolean' },
+    dns_host: { type: 'string' },
+    dns_port: { type: 'integer' },
     dns_namespace: { type: 'string' },
     dns_suffix: { type: 'string' },
     auto_generate_environment: { type: 'boolean' },

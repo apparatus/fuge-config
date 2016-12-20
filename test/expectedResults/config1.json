@@ -17,6 +17,8 @@
     "host": "wibble",
     "delay_start": 1,
     "restart_on_error": true,
+    "dns_host": "0.0.0.0",
+    "dns_port": 53053,
     "max_restarts": 5,
     "dns": {
       "A": {
