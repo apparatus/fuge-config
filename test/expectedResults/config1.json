@@ -32,14 +32,17 @@
       "SRV": {
         "_main._tcp.frontend.testns.svc.cluster.local": {
           "address": "bibble",
+          "cname": "frontend.testns.svc.cluster.local",
           "port": "3000"
         },
         "_tcp._tcp.frontend.testns.svc.cluster.local": {
           "address": "bibble",
+          "cname": "frontend.testns.svc.cluster.local",
           "port": "3001"
         },
         "_main._tcp.service.testns.svc.cluster.local": {
           "address": "wibble",
+          "cname": "service.testns.svc.cluster.local",
           "port": "20000"
         }
       }
@@ -50,7 +53,7 @@
       "frontend": {
         "delay_start": 5,
         "type": "process",
-        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/frontend",
+        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/frontend",
         "build": "sh build.sh",
         "test": "npm test",
         "run": "npm start",
@@ -66,6 +69,10 @@
           "FRONTEND_PORT_3001_TCP_PROTO": "tcp",
           "FRONTEND_PORT_3001_TCP_PORT": "3001",
           "FRONTEND_PORT_3001_TCP_ADDR": "bibble",
+          "DNS_HOST": "0.0.0.0",
+          "DNS_PORT": 53053,
+          "DNS_NAMESPACE": "testns",
+          "DNS_SUFFIX": "svc.cluster.local",
           "SERVICE_SERVICE_HOST": "wibble",
           "SERVICE_SERVICE_PORT": "20000",
           "SERVICE_PORT": "tcp://wibble:20000",
@@ -103,7 +110,7 @@
       },
       "service": {
         "type": "process",
-        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/service",
+        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/service",
         "build": "sh build.sh",
         "test": "npm test",
         "run": "npm start",
@@ -119,6 +126,10 @@
           "FRONTEND_PORT_3001_TCP_PROTO": "tcp",
           "FRONTEND_PORT_3001_TCP_PORT": "3001",
           "FRONTEND_PORT_3001_TCP_ADDR": "bibble",
+          "DNS_HOST": "0.0.0.0",
+          "DNS_PORT": 53053,
+          "DNS_NAMESPACE": "testns",
+          "DNS_SUFFIX": "svc.cluster.local",
           "SERVICE_SERVICE_HOST": "wibble",
           "SERVICE_SERVICE_PORT": "20000",
           "SERVICE_PORT": "tcp://wibble:20000",
@@ -179,6 +190,10 @@
           "FRONTEND_PORT_3001_TCP_PROTO": "tcp",
           "FRONTEND_PORT_3001_TCP_PORT": "3001",
           "FRONTEND_PORT_3001_TCP_ADDR": "bibble",
+          "DNS_HOST": "0.0.0.0",
+          "DNS_PORT": 53053,
+          "DNS_NAMESPACE": "testns",
+          "DNS_SUFFIX": "svc.cluster.local",
           "SERVICE_SERVICE_HOST": "wibble",
           "SERVICE_SERVICE_PORT": "20000",
           "SERVICE_PORT": "tcp://wibble:20000",

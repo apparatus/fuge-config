@@ -7,6 +7,8 @@ fuge_global:
   dns_enabled: true
   dns_suffix: svc.cluster.local
   dns_namespace: testns
+  dns_host: 0.0.0.0
+  dns_port: 53053
   auto_generate_environment: false
   auto_port_start: 20000
   environment:

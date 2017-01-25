@@ -29,10 +29,12 @@
       "SRV": {
         "_main._tcp.frontend.testns.svc.cluster.local": {
           "address": "bibble",
+          "cname": "frontend.testns.svc.cluster.local",
           "port": "3000"
         },
         "_tcp._tcp.frontend.testns.svc.cluster.local": {
           "address": "bibble",
+          "cname": "frontend.testns.svc.cluster.local",
           "port": "3001"
         }
       }
@@ -50,7 +52,7 @@
         "max_restarts": 5,
         "dns_enabled": true,
         "type": "process",
-        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/frontend",
+        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/frontend",
         "build": "sh build.sh",
         "test": "npm test",
         "run": "npm start",
@@ -66,6 +68,10 @@
           "FRONTEND_PORT_3001_TCP_PROTO": "tcp",
           "FRONTEND_PORT_3001_TCP_PORT": "3001",
           "FRONTEND_PORT_3001_TCP_ADDR": "bibble",
+          "DNS_HOST": "0.0.0.0",
+          "DNS_PORT": 53053,
+          "DNS_NAMESPACE": "testns",
+          "DNS_SUFFIX": "svc.cluster.local",
           "FUGE": "ROCKS",
           "ONE": "TWO"
         },

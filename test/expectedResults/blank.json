@@ -14,7 +14,7 @@
     "delay_start": 0,
     "restart_on_error": false,
     "max_restarts": 5,
-    "host": "localhost"
+    "host": "127.0.0.1"
   },
   "topology": {
     "containers": {}
