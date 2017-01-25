@@ -2,7 +2,7 @@
   "license": "MIT",
   "name": "fuge-config",
   "author": "Peter Elger (https://github.com/pelger)",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "contributors": [ ],
   "keywords": [
     "microservices",
