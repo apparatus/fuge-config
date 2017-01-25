@@ -16,6 +16,7 @@
 
 var _ = require('lodash')
 
+
 /**
  * generate environment block and dns entries compatible with kube
  *
@@ -26,7 +27,6 @@ var _ = require('lodash')
  *  <service name>_PORT_<port number>_TCP_PROTO=tcp
  *  <service name>_PORT_<port number>_TCP_PORT=3000
  *  <service name>_PORT_<port number>_TCP_ADDR=addr
- *
  */
 module.exports = function () {
 
@@ -85,7 +85,7 @@ module.exports = function () {
 
       _.each(_.keys(system.topology.containers[key].ports), function (pkey) {
         var port = system.topology.containers[key].ports[pkey][0]
-        system.global.dns.SRV['_' + pkey + '._tcp.' + key + namespace + suffix] = {address: host, port: port}
+        system.global.dns.SRV['_' + pkey + '._tcp.' + key + namespace + suffix] = {address: host, cname: key + namespace + suffix, port: port}
       })
     }
   }

@@ -9,6 +9,8 @@
     "dns_enabled": true,
     "dns_suffix": "svc.cluster.local",
     "dns_namespace": "testns",
+    "dns_host": "0.0.0.0",
+    "dns_port": 53053,
     "auto_generate_environment": false,
     "auto_port_start": 20000,
     "environment": {
@@ -18,8 +20,6 @@
     "delay_start": 1,
     "restart_on_error": true,
     "max_restarts": 5,
-    "dns_host": "0.0.0.0",
-    "dns_port": 53053,
     "dns": {
       "A": {
         "frontend.testns.svc.cluster.local": {
@@ -32,14 +32,17 @@
       "SRV": {
         "_main._tcp.frontend.testns.svc.cluster.local": {
           "address": "bibble",
+          "cname": "frontend.testns.svc.cluster.local",
           "port": "3000"
         },
         "_tcp._tcp.frontend.testns.svc.cluster.local": {
           "address": "bibble",
+          "cname": "frontend.testns.svc.cluster.local",
           "port": "3001"
         },
         "_http._tcp.mongo.testns.svc.cluster.local": {
           "address": "wibble",
+          "cname": "mongo.testns.svc.cluster.local",
           "port": "1000080"
         }
       }
@@ -50,7 +53,7 @@
       "frontend": {
         "delay_start": 5,
         "type": "process",
-        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/frontend",
+        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/frontend",
         "build": "sh build.sh",
         "test": "npm test",
         "run": "npm start",
@@ -85,7 +88,7 @@
       },
       "service": {
         "type": "process",
-        "path": "/Users/pelger/work/nearform/code/apparatus/fugedir/fuge-config/test/fixture/service",
+        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/service",
         "build": "sh build.sh",
         "test": "npm test",
         "run": "npm start",

@@ -211,6 +211,10 @@ module.exports = function () {
           system.topology.containers[key].dns_enabled = system.global.dns_enabled
         }
         if (system.topology.containers[key].dns_enabled) {
+          sharedEnv.DNS_HOST = system.global.dns_host
+          sharedEnv.DNS_PORT = system.global.dns_port
+          sharedEnv.DNS_NAMESPACE = system.global.dns_namespace
+          sharedEnv.DNS_SUFFIX = system.global.dns_suffix
           kubeEnv.generateDnsForContainer(system, key)
         }
       })
@@ -238,7 +242,7 @@ module.exports = function () {
     system.global.environment = env
 
     if (!system.global.host) {
-      system.global.host = 'localhost'
+      system.global.host = '127.0.0.1'
     }
   }
 
