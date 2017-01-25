@@ -130,6 +130,16 @@ Valid global settings are as follows:
       <td>when enabled will generate A and SRV records for each service.</td>
       <td>false</td></tr>
 
+<tr><td>dns_host</td>
+      <td>string</td>
+      <td>host ip address for dns server to bind to.</td>
+      <td>0.0.0.0</td></tr>
+
+<tr><td>dns_port</td>
+      <td>integer</td>
+      <td>port for dns server</td>
+      <td>53053</td></tr>
+
 <tr><td>dns_namespace</td>
       <td>string</td>
       <td>Used as a global namespace during dns name generation</td>

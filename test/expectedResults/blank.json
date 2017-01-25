@@ -5,6 +5,8 @@
     "monitor": true,
     "monitor_excludes": [],
     "dns_enabled": false,
+    "dns_host": "0.0.0.0",
+    "dns_port": 53053,
     "dns_suffix": "",
     "dns_namespace": "",
     "auto_generate_environment": true,
