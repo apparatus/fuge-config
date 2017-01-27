@@ -19,6 +19,7 @@ module.exports.globalSchema = {
   type: 'object',
   properties: {
     run_containers: { type: 'boolean' },
+    container_engine_url: { type: 'string' },
     host: { type: 'string' },
     tail: { type: 'boolean' },
     monitor: { type: 'boolean' },
@@ -49,6 +50,7 @@ module.exports.globalSchema = {
   }
 }
 
+
 module.exports.containerSchema = {
   title: 'Container Schema',
   type: 'object',
@@ -75,6 +77,7 @@ module.exports.containerSchema = {
     build: { type: 'string' },
     test: { type: 'string' },
     run: { type: 'string' },
+    args: { type: 'string' },
     delay_start: { type: 'integer' },
     restart_on_error: { type: 'boolean' },
     max_restarts: { type: 'integer' },
@@ -101,7 +104,21 @@ module.exports.containerSchema = {
         }
       }
     },
+    run: {
+      properties: {
+        type: {
+          enum: ['process']
+        }
+      }
+    },
     image: {
+      properties: {
+        type: {
+          enum: ['container']
+        }
+      }
+    },
+    args: {
       properties: {
         type: {
           enum: ['container']
@@ -109,6 +126,6 @@ module.exports.containerSchema = {
       }
     }
   },
-  required: ['type', 'run']
+  required: ['type']
 }
 

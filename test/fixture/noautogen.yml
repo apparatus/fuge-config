@@ -43,7 +43,7 @@ mongo:
   type: container
   image: mongodb
   dns_namespace: mongo
-  run: 'docker run -e -p'
+  args: '-e -p'
   ports:
     - http=1000080
 
