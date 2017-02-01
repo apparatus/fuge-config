@@ -57,7 +57,7 @@ module.exports.containerSchema = {
   properties: {
     type: {
       type: 'string',
-      enum: ['process', 'container']
+      enum: ['process', 'container', 'node']
     },
     host: { type: 'string' },
     tail: { type: 'boolean' },
@@ -100,14 +100,14 @@ module.exports.containerSchema = {
     path: {
       properties: {
         type: {
-          enum: ['process']
+          enum: ['process', 'node']
         }
       }
     },
     run: {
       properties: {
         type: {
-          enum: ['process']
+          enum: ['process', 'node']
         }
       }
     },

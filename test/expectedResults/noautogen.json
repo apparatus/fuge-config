@@ -20,7 +20,7 @@
     "delay_start": 1,
     "restart_on_error": true,
     "max_restarts": 5,
-    "container_engine_url": "/var/run/docker.sock",
+    "container_engine_url": "",
     "dns": {
       "A": {
         "frontend.testns.svc.cluster.local": {

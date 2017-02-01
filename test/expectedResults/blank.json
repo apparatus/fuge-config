@@ -1,7 +1,7 @@
 {
   "global": {
     "run_containers": true,
-    "container_engine_url": "/var/run/docker.sock",
+    "container_engine_url": "",
     "tail": true,
     "monitor": true,
     "monitor_excludes": [],
