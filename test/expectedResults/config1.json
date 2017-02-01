@@ -1,6 +1,7 @@
 {
   "global": {
     "run_containers": false,
+    "container_engine_url": "/var/run/docker.socket",
     "tail": true,
     "monitor": true,
     "monitor_excludes": [
@@ -169,7 +170,7 @@
         "dns_enabled": false,
         "dns_namespace": "mongo",
         "dns_suffix": "local",
-        "run": "docker run -e -p",
+        "args": "-e -p",
         "ports": {
           "http": [
             "1000080",

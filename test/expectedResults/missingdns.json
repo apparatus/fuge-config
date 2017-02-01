@@ -15,6 +15,7 @@
     "host": "wibble",
     "delay_start": 1,
     "restart_on_error": true,
+    "container_engine_url": "",
     "dns_host": "0.0.0.0",
     "dns_port": 53053,
     "dns_suffix": "",
@@ -168,7 +169,7 @@
         "auto_generate_environment": false,
         "dns_enabled": false,
         "dns_namespace": "mongo",
-        "run": "docker run -e -p",
+        "args": "-e -p",
         "ports": {
           "http": [
             "1000080",

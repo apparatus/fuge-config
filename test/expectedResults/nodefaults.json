@@ -18,6 +18,7 @@
     "delay_start": 1,
     "restart_on_error": true,
     "max_restarts": 5,
+    "container_engine_url": "",
     "dns_host": "0.0.0.0",
     "dns_port": 53053,
     "dns": {
