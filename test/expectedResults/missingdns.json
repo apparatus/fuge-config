@@ -107,7 +107,14 @@
         "auto_generate_environment": true,
         "dns_suffix": "",
         "dns_namespace": "",
-        "dns_enabled": true
+        "dns_enabled": true,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
       },
       "service": {
         "type": "process",
@@ -161,7 +168,14 @@
         "auto_generate_environment": true,
         "dns_suffix": "",
         "dns_namespace": "",
-        "dns_enabled": true
+        "dns_enabled": true,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
       },
       "mongo": {
         "type": "container",
@@ -205,14 +219,21 @@
         },
         "host": "wibble",
         "tail": true,
-        "monitor": true,
+        "monitor": false,
         "monitor_excludes": [
           "/node_modules|\\.git|\\.log/mgi,"
         ],
         "delay_start": 1,
         "restart_on_error": true,
         "max_restarts": 5,
-        "dns_suffix": ""
+        "dns_suffix": "",
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
       }
     }
   }

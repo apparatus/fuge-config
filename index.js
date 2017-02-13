@@ -38,16 +38,6 @@ var kubeEnv = require('./kubeEnv')()
  * or funge existing code into this format
  * or rewrite existing code to do this?? - might make more sense
  */
-/*
- * todo:
- * - generate dns lookups based on settings here also
- * - complete unit tests - more stringent test cases
- *
- *   restart_on_error  - field
- *   max_restart_count - field
- *     - add these in
- */
-
 module.exports = function () {
 
   function validateInput (yamlPath, system, cb) {
@@ -165,7 +155,11 @@ module.exports = function () {
 
         // set monitor behaviour for this container to global default if not set
         if (!system.topology.containers[key].hasOwnProperty('monitor')) {
-          system.topology.containers[key].monitor = system.global.monitor
+          if (system.topology.containers[key].type === 'process' || system.topology.containers[key].type === 'node') {
+            system.topology.containers[key].monitor = system.global.monitor
+          } else {
+            system.topology.containers[key].monitor = false
+          }
         }
 
         // set monitor exclude array for this container to global default if not set
@@ -224,6 +218,13 @@ module.exports = function () {
       if (system.global.auto_generate_environment) {
         _.each(_.keys(system.topology.containers), function (key) {
           system.topology.containers[key].environment = _.merge(_.cloneDeep(sharedEnv), system.topology.containers[key].environment)
+        })
+      }
+
+      // add a blank process block to each container
+      if (system.global.auto_generate_environment) {
+        _.each(_.keys(system.topology.containers), function (key) {
+          system.topology.containers[key].process = { history: [], flags: {}, child: null, colour: null, monitor: null }
         })
       }
     }

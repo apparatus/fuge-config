@@ -92,7 +92,14 @@
         "delay_start": 1,
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
-        "dns_namespace": "testns"
+        "dns_namespace": "testns",
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
       }
     }
   }

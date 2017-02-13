@@ -132,7 +132,7 @@
         },
         "host": "wibble",
         "tail": true,
-        "monitor": true,
+        "monitor": false,
         "monitor_excludes": [
           "/node_modules|\\.git|\\.log/mgi,"
         ],
