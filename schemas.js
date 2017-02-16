@@ -81,6 +81,7 @@ module.exports.containerSchema = {
     delay_start: { type: 'integer' },
     restart_on_error: { type: 'boolean' },
     max_restarts: { type: 'integer' },
+    repository_url: { type: 'string' },
     environment: {
       type: 'array',
       items: {
