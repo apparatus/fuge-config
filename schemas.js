@@ -44,7 +44,7 @@ module.exports.globalSchema = {
       type: 'array',
       items: {
         type: 'string',
-        pattern: '^[A-Za-z0-9_]+=[A-Za-z0-9_]+$'
+        pattern: '^[A-Za-z0-9_]+=.+$'
       }
     }
   }
@@ -86,7 +86,7 @@ module.exports.containerSchema = {
       type: 'array',
       items: {
         type: 'string',
-        pattern: '^[A-Za-z0-9_]+=[A-Za-z0-9_]+$'
+        pattern: '^[A-Za-z0-9_]+=.+$'
       }
     },
     ports: {

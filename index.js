@@ -222,11 +222,9 @@ module.exports = function () {
       }
 
       // add a blank process block to each container
-      if (system.global.auto_generate_environment) {
-        _.each(_.keys(system.topology.containers), function (key) {
-          system.topology.containers[key].process = { history: [], flags: {}, child: null, colour: null, monitor: null }
-        })
-      }
+      _.each(_.keys(system.topology.containers), function (key) {
+        system.topology.containers[key].process = { history: [], flags: {}, child: null, colour: null, monitor: null }
+      })
     }
   }
 

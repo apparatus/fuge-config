@@ -85,7 +85,14 @@
         "auto_generate_environment": false,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "testns",
-        "dns_enabled": true
+        "dns_enabled": true,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
       },
       "service": {
         "type": "process",
@@ -112,7 +119,14 @@
         "auto_generate_environment": false,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "testns",
-        "dns_enabled": true
+        "dns_enabled": true,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
       },
       "mongo": {
         "type": "container",
@@ -141,7 +155,14 @@
         "max_restarts": 5,
         "auto_generate_environment": false,
         "dns_suffix": "svc.cluster.local",
-        "dns_enabled": true
+        "dns_enabled": true,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
       }
     }
   }
