@@ -83,7 +83,7 @@
           "SERVICE_PORT_20000_TCP_ADDR": "wibble",
           "FUGE": "ROCKS",
           "ONE": "TWO",
-          "THREE": "BASE64STRING=="
+          "THREE": "\"BASE64STRING==\""
         },
         "host": "bibble",
         "ports": {
