@@ -24,6 +24,7 @@ frontend:
   run: 'npm start'
   environment:
     - ONE=TWO
+    - THREE="BASE64STRING=="
   host: bibble
   ports:
     - main=3000

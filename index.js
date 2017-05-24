@@ -122,8 +122,9 @@ module.exports = function () {
         if (system.topology.containers[key].environment && system.topology.containers[key].environment.length > 0) {
           env = {}
           _.each(system.topology.containers[key].environment, function (ev) {
-            var s = ev.split('=')
-            env[s[0]] = s[1]
+            var k = ev.substring(0, ev.indexOf('='))
+            var v = ev.substring(ev.indexOf('=') + 1 )
+            env[k] = v
           })
           system.topology.containers[key].environment = _.merge(_.cloneDeep(system.global.environment), env)
         } else {
@@ -235,8 +236,9 @@ module.exports = function () {
 
     if (system.global.environment.length > 0) {
       _.each(system.global.environment, function (ev) {
-        var s = ev.split('=')
-        env[s[0]] = s[1]
+        var k = ev.substring(0, ev.indexOf('='))
+        var v = ev.substring(ev.indexOf('=') + 1 )
+        env[k] = v
       })
     }
     system.global.environment = env
