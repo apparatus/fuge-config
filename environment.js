@@ -79,8 +79,9 @@ module.exports = function () {
 
     if (_.isArray(envIn) && envIn.length > 0) {
       _.each(envIn, function (ev) {
-        var s = ev.split('=')
-        env[s[0]] = s[1]
+        var k = ev.substring(0, ev.indexOf('='))
+        var v = ev.substring(ev.indexOf('=') + 1)
+        env[k] = v
       })
     } else if (_.isObject(envIn)) {
       env = envIn

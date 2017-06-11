@@ -79,7 +79,8 @@
           "SERVICE_PORT_20000_TCP_PROTO": "tcp",
           "SERVICE_PORT_20000_TCP_PORT": "20000",
           "SERVICE_PORT_20000_TCP_ADDR": "wibble",
-          "ONE": "TWO"
+          "ONE": "TWO",
+          "THREE": "\"BASE64STRING==\""
         },
         "host": "bibble",
         "ports": {
