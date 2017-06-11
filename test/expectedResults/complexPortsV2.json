@@ -522,7 +522,9 @@
           "not": "toss",
           "RACK_ENV": "development",
           "SHOW": "true",
-          "SESSION_SECRET": "asdf"
+          "SESSION_SECRET": "asdf",
+          "SERVICE_HOST": "service_2",
+          "SERVICE_PORT": "5010"
         },
         "env_file": "./s2.env",
         "tail": true,
@@ -752,7 +754,9 @@
           "pting": "arggggggggg",
           "RACK_ENV": "development",
           "SHOW": "true",
-          "SESSION_SECRET": "1234"
+          "SESSION_SECRET": "1234",
+          "SERVICE_HOST": "127.0.0.1",
+          "SERVICE_PORT": "3005"
         },
         "env_file": [
           "./s4_one.env",
@@ -954,7 +958,9 @@
           "SERVICE_1_PORT_8080_TCP": "tcp://127.0.0.1:8080",
           "SERVICE_1_PORT_8080_TCP_PROTO": "tcp",
           "SERVICE_1_PORT_8080_TCP_PORT": "8080",
-          "SERVICE_1_PORT_8080_TCP_ADDR": "127.0.0.1"
+          "SERVICE_1_PORT_8080_TCP_ADDR": "127.0.0.1",
+          "SERVICE_HOST": "127.0.0.1",
+          "SERVICE_PORT": "10000"
         },
         "host": "127.0.0.1",
         "tail": true,
@@ -1152,7 +1158,9 @@
           "SERVICE_1_PORT_8080_TCP": "tcp://127.0.0.1:8080",
           "SERVICE_1_PORT_8080_TCP_PROTO": "tcp",
           "SERVICE_1_PORT_8080_TCP_PORT": "8080",
-          "SERVICE_1_PORT_8080_TCP_ADDR": "127.0.0.1"
+          "SERVICE_1_PORT_8080_TCP_ADDR": "127.0.0.1",
+          "SERVICE_HOST": "127.0.0.1",
+          "SERVICE_PORT": "6379"
         },
         "host": "127.0.0.1",
         "tail": true,
@@ -1351,7 +1359,9 @@
           "SERVICE_1_PORT_8080_TCP_PROTO": "tcp",
           "SERVICE_1_PORT_8080_TCP_PORT": "8080",
           "SERVICE_1_PORT_8080_TCP_ADDR": "127.0.0.1",
-          "wibble": "bibble"
+          "wibble": "bibble",
+          "SERVICE_HOST": "127.0.0.1",
+          "SERVICE_PORT": "8080"
         },
         "name": "service_1",
         "specific": {},

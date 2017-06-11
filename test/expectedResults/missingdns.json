@@ -74,12 +74,13 @@
           "DNS_SUFFIX": "",
           "SERVICE_SERVICE_HOST": "wibble",
           "SERVICE_SERVICE_PORT": "20000",
-          "SERVICE_PORT": "tcp://wibble:20000",
+          "SERVICE_PORT": "3001",
           "SERVICE_PORT_20000_TCP": "tcp://wibble:20000",
           "SERVICE_PORT_20000_TCP_PROTO": "tcp",
           "SERVICE_PORT_20000_TCP_PORT": "20000",
           "SERVICE_PORT_20000_TCP_ADDR": "wibble",
-          "ONE": "TWO"
+          "ONE": "TWO",
+          "SERVICE_HOST": "bibble"
         },
         "host": "bibble",
         "ports": {
@@ -143,7 +144,8 @@
           "SERVICE_PORT_20000_TCP_PORT": "20000",
           "SERVICE_PORT_20000_TCP_ADDR": "wibble",
           "ONE": "TWO",
-          "FUGE": "DOUBLEROCKS"
+          "FUGE": "DOUBLEROCKS",
+          "SERVICE_HOST": "wibble"
         },
         "name": "service",
         "specific": {},

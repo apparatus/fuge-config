@@ -69,7 +69,9 @@
           "RACK_ENV": "development",
           "NODE_ENV": "",
           "TEST": "",
-          "NO_WAY": ""
+          "NO_WAY": "",
+          "SERVICE_HOST": "127.0.0.1",
+          "SERVICE_PORT": "10000"
         },
         "env_file": [
           "./s2.env",
@@ -150,7 +152,9 @@
           "monger": "offish",
           "not": "toss",
           "bananna": "teacup",
-          "hatstand": "fish"
+          "hatstand": "fish",
+          "SERVICE_HOST": "127.0.0.1",
+          "SERVICE_PORT": "6379"
         },
         "host": "127.0.0.1",
         "tail": true,
@@ -223,7 +227,9 @@
           "not": "toss",
           "DEBUG_PORT": "8081",
           "wibble": "",
-          "": ""
+          "": "",
+          "SERVICE_HOST": "127.0.0.1",
+          "SERVICE_PORT": "8081"
         },
         "name": "service_1",
         "specific": {},

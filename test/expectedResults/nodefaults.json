@@ -71,7 +71,9 @@
           "DNS_PORT": 53053,
           "DNS_NAMESPACE": "testns",
           "DNS_SUFFIX": "svc.cluster.local",
-          "ONE": "TWO"
+          "ONE": "TWO",
+          "SERVICE_HOST": "bibble",
+          "SERVICE_PORT": "3001"
         },
         "host": "bibble",
         "ports": {
