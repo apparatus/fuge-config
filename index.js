@@ -20,7 +20,10 @@ var _ = require('lodash')
 var yaml = require('js-yaml')
 var Validator = require('jsonschema').Validator
 var schemas = require('./schemas')
+var inc = require('./includes')()
 var kubeEnv = require('./kubeEnv')()
+var ev = require('./environment')()
+
 
 
 /**
@@ -60,7 +63,10 @@ module.exports = function () {
           })
         }
         if (system.topology.containers[key].path) {
-          var p = path.resolve(path.join(path.dirname(yamlPath), system.topology.containers[key].path))
+          var p = system.topology.containers[key].path
+          if (!path.isAbsolute(p)) {
+            p = path.resolve(path.join(path.dirname(yamlPath), system.topology.containers[key].path))
+          }
           if (!fs.existsSync(p)) {
             message += 'element: ' + key + ', path does not exist: ' + p + '\n'
           }
@@ -115,19 +121,19 @@ module.exports = function () {
 
         // replace relative path with absolute
         if (system.topology.containers[key].path) {
-          system.topology.containers[key].path = path.resolve(path.join(path.dirname(yamlPath), system.topology.containers[key].path))
+          // test if absolute already
+          if (!path.isAbsolute(system.topology.containers[key].path)) {
+            system.topology.containers[key].path = path.resolve(path.join(path.dirname(yamlPath), system.topology.containers[key].path))
+          }
         }
 
         // create environment block for this container
-        if (system.topology.containers[key].environment && system.topology.containers[key].environment.length > 0) {
-          env = {}
-          _.each(system.topology.containers[key].environment, function (ev) {
-            var s = ev.split('=')
-            env[s[0]] = s[1]
-          })
+        env = ev.loadEnvFiles(yamlPath, system.topology.containers[key])
+        if (system.topology.containers[key].environment) {
+          env = _.merge(env, ev.buildEnvironmentBlock(system.topology.containers[key].environment))
           system.topology.containers[key].environment = _.merge(_.cloneDeep(system.global.environment), env)
         } else {
-          system.topology.containers[key].environment = _.cloneDeep(system.global.environment)
+          system.topology.containers[key].environment = _.merge(_.cloneDeep(system.global.environment), env)
         }
 
         // create ports block for this container
@@ -230,17 +236,9 @@ module.exports = function () {
 
 
 
-  function buildGlobalEnvironment (system) {
-    var env = {}
-
-    if (system.global.environment.length > 0) {
-      _.each(system.global.environment, function (ev) {
-        var s = ev.split('=')
-        env[s[0]] = s[1]
-      })
-    }
-    system.global.environment = env
-
+  function buildGlobalEnvironment (yamlPath, system) {
+    system.global.environment = ev.loadEnvFiles(yamlPath, system.global)
+    system.global.environment = _.merge(system.global.environment, ev.buildEnvironmentBlock(system.global.environment))
     if (!system.global.host) {
       system.global.host = '127.0.0.1'
     }
@@ -254,7 +252,9 @@ module.exports = function () {
 
     try {
       yml = yaml.safeLoad(fs.readFileSync(yamlPath, 'utf8'))
+      _.merge(system.topology.containers, inc.process(yamlPath, yml))
     } catch (ex) {
+      // console.log(ex)
       return cb(ex.message)
     }
 
@@ -270,8 +270,9 @@ module.exports = function () {
     validateInput(yamlPath, system, function (err) {
       if (err) { return cb(err) }
       setGlobalDefaults(system)
-      buildGlobalEnvironment(system)
+      buildGlobalEnvironment(yamlPath, system)
       expandContainers(yamlPath, system)
+      ev.interpolate(system)
       cb(null, system)
     })
   }

@@ -1,13 +1,10 @@
-# fuge-config
+# Fuge-Config
 Configuration file parser for fuge.
 
-- __Sponsor:__ [nearForm][sponsor]
+If you're using this module, and need help, you can:
 
-* [Install](#install)
-* [Format](#api)
-* [Example](#example)
-* [License](#license)
-
+- Post a [github issue][https://github.com/apparatus/fuge/issues],
+- Reach out on twitter to @pelger
 
 ## Install
 fuge-config provides configuration file parsing for `fuge`. To install fuge use npm:
@@ -15,7 +12,6 @@ fuge-config provides configuration file parsing for `fuge`. To install fuge use 
 ```sh
 $ npm install -g fuge
 ```
-
 
 ## Format
 The fuge config file format is yaml based and is structured as follows:
@@ -33,10 +29,13 @@ fuge_global:
 <service2 settings>:
   .
   .
+include:
+  - <docker-compose-file>
 ```
 
-Settings are provided at a global and per service level. Generally any global settings may be overridden at the container / service level. Global settings are applied to all containers.
+Settings are provided at a global and per service level. Generally, any global settings may be overridden at the container / service level. Global settings are applied to all containers.
 
+You may optionally include a list of docker-compose formatted files through the use of the include setting. Fuge supports V1, V2 and V3 docker-compose syntax.
 
 ## Examples
 A simple example is provided below:
@@ -63,7 +62,14 @@ mongo:
     - tcp=27017:27017
 ```
 
-In the simple example fuge will run a frontend process (called frontend) and a mongodb container. This might be the configuration for a monolithic mean stack application. A more complicated example follows:
+In the simple example fuge will run a frontend process (called frontend) and a mongodb container. This might be the configuration for a monolithic MEAN stack application. The application can be started through the Fuge shell:
+
+```sh
+$ fuge shell <path to config file>
+fuge> start all
+```
+
+A more complicated example follows:
 
 ```
 fuge_global:
@@ -91,6 +97,10 @@ service_one:
   type: process
   path: ./service_one
   run: 'npm start'
+service_two:
+  type: process
+  path: ./service_two
+  run: 'npm start'
 mongo:
   type: container
   image: mongodb
@@ -98,7 +108,7 @@ mongo:
     - tcp=27017:27017
 ```
 
-In the above example fuge will generate environment variables and dns entries for frontend, service_one and mongodb.
+In the above example fuge will generate environment variables and dns entries for frontend, service_one, service_two and mongodb. Again the entire system can be started using the fuge shell.
 
 ## Emulating production environments
 Fuge will emulate your production environment allowing you to run code with the same configuration in development as would run in production. In the example above fuge has been configured to emulate Kubernetes for local development.
@@ -108,12 +118,13 @@ Fuge will generate Kubernetes style dns entries and and environment variables. T
 type  domain                                            address                                port
 A     frontend.testns.svc.cluster.local                 127.0.0.1                              -
 A     service_one.testns.svc.cluster.local              127.0.0.1                              -
+A     service_two.testns.svc.cluster.local              127.0.0.1                              -
 A     mongo.testns.svc.cluster.local                    127.0.0.1                              -
 SRV   _http._tcp.frontend.testns.svc.cluster.local      frontend.testns.svc.cluster.local      3000
 SRV   _main._tcp.service_one.testns.svc.cluster.local   service_one.testns.svc.cluster.local   20000
+SRV   _main._tcp.service_two.testns.svc.cluster.local   service_one.testns.svc.cluster.local   20001
 SRV   _tcp._tcp.mongo.testns.svc.cluster.local          mongo.testns.svc.cluster.local         27017
 ```
-  
 
 Fuge will also generate Kubernetes style environment variables as follows from the above example:
 
@@ -135,7 +146,14 @@ SERVICE_ONE_PORT=tcp://127.0.0.1:20000
 SERVICE_ONE_PORT_20000_TCP=tcp://127.0.0.1:20000
 SERVICE_ONE_PORT_20000_TCP_PROTO=tcp
 SERVICE_ONE_PORT_20000_TCP_PORT=20000
-SERVICE_ONE_PORT_20000_TCP_ADDR=127.0.0.1
+SERVICE_ONE_PORT_20000_TCP_ADDR=127.0.0.t
+SERVICE_TWO_SERVICE_HOST=127.0.0.1
+SERVICE_TWO_SERVICE_PORT=20001
+SERVICE_TWO_PORT=tcp://127.0.0.1:20001
+SERVICE_TWO_PORT_20001_TCP=tcp://127.0.0.1:20000
+SERVICE_TWO_PORT_20001_TCP_PROTO=tcp
+SERVICE_TWO_PORT_20001_TCP_PORT=20001
+SERVICE_TWO_PORT_20001_TCP_ADDR=127.0.0.1
 MONGO_SERVICE_HOST=127.0.0.1
 MONGO_SERVICE_PORT=27017
 MONGO_PORT=tcp://127.0.0.1:27017
@@ -145,6 +163,9 @@ MONGO_PORT_27017_TCP_PORT=27017
 MONGO_PORT_27017_TCP_ADDR=127.0.0.1
 NODE_ENV=DEV
 ```
+
+## Environment Handling
+Fuge supports loading of environment files both at the global and service scope. It also supports environment variable interpolation in the fuge config file and and included docker compose files.
 
 ## Detail
 
@@ -158,7 +179,7 @@ Valid global settings are as follows:
 
   <tr><td>run_containers</td>
       <td>boolean</td>
-      <td>when enabled fuge will run docker containers specified as services</td>
+      <td>when enabled fuge will run docker containers using the local docker api. A container is specified as having type 'container'</td>
       <td>true</td></tr>
 
   <tr><td>container_engine_url</td>
@@ -173,12 +194,12 @@ Valid global settings are as follows:
 
 <tr><td>tail</td>
       <td>boolean</td>
-      <td>toggles tail behaviour, when enabled at global level all service logs will be tailed</td>
+      <td>toggles tail behavior, when enabled at global level all container and process logs will be tailed</td>
       <td>true</td></tr>
 
 <tr><td>monitor</td>
       <td>boolean</td>
-      <td>toggles monitor behaviour, when enabled at global level all services will be watched for changes and restared</td>
+      <td>toggles monitor behavior, when enabled at global level all processes will be watched for changes and restarted</td>
       <td>true</td></tr>
 
 <tr><td>monitor_excludes</td>
@@ -226,6 +247,11 @@ Valid global settings are as follows:
       <td>Provide global environment variables to each service</td>
       <td>[]</td></tr>
 
+<tr><td>env_file</td>
+      <td>array of string</td>
+      <td>Specifiy a list of environment files to load into the global environment</td>
+      <td>[]</td></tr>
+
 <tr><td>host</td>
       <td>string</td>
       <td>provide a global host name or ip address</td>
@@ -245,10 +271,15 @@ Valid global settings are as follows:
       <td>integer</td>
       <td>maximum number of times to attempt service restart after crash</td>
       <td>5</td></tr>
+
+<tr><td>include</td>
+      <td>Array of string</td>
+      <td>List of docker compose files to include in this fuge system</td>
+      <td>[]</td></tr>
 </table>
 
 ### Service Settings
-All of the global settings documented above may be specififed at the service level. When specified at the service level settings override the global options. In addition at the service level the following additional settings are required/allowed:
+Most of the global settings documented above may be specified at the service level. When specified at the service level, settings override the global options. In addition at the service level the following settings are required/allowed:
 
 <table>
   <tr><td>name</td><td>type</td><td>effect</td><td>default</td></tr>
@@ -260,7 +291,7 @@ All of the global settings documented above may be specififed at the service lev
 
   <tr><td>path</td>
       <td>string</td>
-      <td>If type 'process' path is requried. Relative path to the process executable</td>
+      <td>If type 'process' path is required. Relative path to the process executable</td>
       <td>none - required if process</td></tr>
 
   <tr><td>image</td>
@@ -281,20 +312,22 @@ All of the global settings documented above may be specififed at the service lev
   <tr><td>run</td>
       <td>string</td>
       <td>run script for the process, relative to the path setting </td>
-      <td>none - required</td></tr>
+      <td>none - required for processes</td></tr>
 
 <tr><td>environment</td>
       <td>array of string</td>
-      <td>Provide environment variables specific to this service. Will be merged with the global environment</td>
+      <td>Provide environment variables specific to this process or container. Will be merged with the global environment</td>
       <td>[]</td></tr>
 
 <tr><td>ports</td>
       <td>array of string</td>
-      <td>Provide port name value pairsspecific to this service</td>
+      <td>Provide port name value pairs specific to this process / container</td>
       <td>[]</td></tr>
 
 </table>
 
+## What's not supported
+Fuge does not support container volumes from docker files or container linking. If you need these features then docker-compose is going to work better for you. Note however it is possible to run a portion of your system under compose (the bits that don't change much) and a portion under fuge (the bits that are under development) by setting `run_containers` to `false` and importing your docker-compose file. For an example of this see `services-and-infrastructure` sample in this repo: [https://github.com/apparatus/fuge-examples](https://github.com/apparatus/fuge-examples)
 
 ## License
 Copyright Peter Elger 2016 & Contributors, Licensed under [MIT][].

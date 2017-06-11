@@ -13,9 +13,7 @@
     "dns_port": 53053,
     "auto_generate_environment": false,
     "auto_port_start": 20000,
-    "environment": {
-      "FUGE": "ROCKS"
-    },
+    "environment": {},
     "host": "wibble",
     "delay_start": 1,
     "restart_on_error": true,
@@ -59,7 +57,6 @@
         "test": "npm test",
         "run": "npm start",
         "environment": {
-          "FUGE": "ROCKS",
           "ONE": "TWO"
         },
         "host": "bibble",
@@ -101,8 +98,8 @@
         "test": "npm test",
         "run": "npm start",
         "environment": {
-          "FUGE": "DOUBLEROCKS",
-          "ONE": "TWO"
+          "ONE": "TWO",
+          "FUGE": "DOUBLEROCKS"
         },
         "name": "service",
         "specific": {},
@@ -141,9 +138,7 @@
         },
         "name": "mongo",
         "specific": {},
-        "environment": {
-          "FUGE": "ROCKS"
-        },
+        "environment": {},
         "host": "wibble",
         "tail": true,
         "monitor": false,

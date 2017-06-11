@@ -1,0 +1,255 @@
+{
+  "global": {
+    "run_containers": true,
+    "tail": true,
+    "monitor": true,
+    "monitor_excludes": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/*.log"
+    ],
+    "env_file": "./global.env",
+    "container_engine_url": "",
+    "dns_enabled": false,
+    "dns_host": "0.0.0.0",
+    "dns_port": 53053,
+    "dns_suffix": "",
+    "dns_namespace": "",
+    "auto_generate_environment": true,
+    "environment": {
+      "GLOBAL_TEST": "settings",
+      "BAD_STUFF": "${WTF}",
+      "NOT_THIS": "${NOT_THIS}"
+    },
+    "delay_start": 0,
+    "restart_on_error": false,
+    "max_restarts": 5,
+    "host": "127.0.0.1"
+  },
+  "topology": {
+    "containers": {
+      "service_2": {
+        "name": "service_2",
+        "type": "process",
+        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/composeSimpleV1/service_2",
+        "run": "node index.js",
+        "environment": {
+          "SERVICE_2_SERVICE_HOST": "127.0.0.1",
+          "SERVICE_2_SERVICE_PORT": "10000",
+          "SERVICE_2_PORT": "tcp://127.0.0.1:10000",
+          "SERVICE_2_PORT_10000_TCP": "tcp://127.0.0.1:10000",
+          "SERVICE_2_PORT_10000_TCP_PROTO": "tcp",
+          "SERVICE_2_PORT_10000_TCP_PORT": "10000",
+          "SERVICE_2_PORT_10000_TCP_ADDR": "127.0.0.1",
+          "REDIS_SERVICE_HOST": "127.0.0.1",
+          "REDIS_SERVICE_PORT": "6379",
+          "REDIS_PORT": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP_PROTO": "tcp",
+          "REDIS_PORT_6379_TCP_PORT": "6379",
+          "REDIS_PORT_6379_TCP_ADDR": "127.0.0.1",
+          "SERVICE_1_SERVICE_HOST": "127.0.0.1",
+          "SERVICE_1_SERVICE_PORT": "8080",
+          "SERVICE_1_PORT": "tcp://127.0.0.1:8080",
+          "SERVICE_1_PORT_8080_TCP": "tcp://127.0.0.1:8080",
+          "SERVICE_1_PORT_8080_TCP_PROTO": "tcp",
+          "SERVICE_1_PORT_8080_TCP_PORT": "8080",
+          "SERVICE_1_PORT_8080_TCP_ADDR": "127.0.0.1",
+          "SERVICE_1_PORT_8081_TCP": "tcp://127.0.0.1:8081",
+          "SERVICE_1_PORT_8081_TCP_PROTO": "tcp",
+          "SERVICE_1_PORT_8081_TCP_PORT": "8081",
+          "SERVICE_1_PORT_8081_TCP_ADDR": "127.0.0.1",
+          "GLOBAL_TEST": "",
+          "BAD_STUFF": "",
+          "NOT_THIS": "",
+          "monger": "offish",
+          "not": "toss",
+          "bananna": "teacup",
+          "hatstand": "fish",
+          "RACK_ENV": "development",
+          "NODE_ENV": "",
+          "TEST": "",
+          "NO_WAY": ""
+        },
+        "env_file": [
+          "./s2.env",
+          "./s22.env"
+        ],
+        "ports": {
+          "main": [
+            "10000",
+            null
+          ]
+        },
+        "host": "127.0.0.1",
+        "tail": true,
+        "monitor": true,
+        "monitor_excludes": [
+          "**/node_modules/**",
+          "**/.git/**",
+          "**/*.log"
+        ],
+        "delay_start": 0,
+        "restart_on_error": false,
+        "max_restarts": 5,
+        "auto_generate_environment": true,
+        "dns_suffix": "",
+        "dns_namespace": "",
+        "dns_enabled": false,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
+      },
+      "redis": {
+        "name": "redis",
+        "type": "container",
+        "image": "redis",
+        "ports": {
+          "redis": [
+            "6379",
+            "6379"
+          ]
+        },
+        "env_file": [
+          "./service_2/s2.env",
+          "./service_2/s22.env"
+        ],
+        "environment": {
+          "SERVICE_2_SERVICE_HOST": "127.0.0.1",
+          "SERVICE_2_SERVICE_PORT": "10000",
+          "SERVICE_2_PORT": "tcp://127.0.0.1:10000",
+          "SERVICE_2_PORT_10000_TCP": "tcp://127.0.0.1:10000",
+          "SERVICE_2_PORT_10000_TCP_PROTO": "tcp",
+          "SERVICE_2_PORT_10000_TCP_PORT": "10000",
+          "SERVICE_2_PORT_10000_TCP_ADDR": "127.0.0.1",
+          "REDIS_SERVICE_HOST": "127.0.0.1",
+          "REDIS_SERVICE_PORT": "6379",
+          "REDIS_PORT": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP_PROTO": "tcp",
+          "REDIS_PORT_6379_TCP_PORT": "6379",
+          "REDIS_PORT_6379_TCP_ADDR": "127.0.0.1",
+          "SERVICE_1_SERVICE_HOST": "127.0.0.1",
+          "SERVICE_1_SERVICE_PORT": "8080",
+          "SERVICE_1_PORT": "tcp://127.0.0.1:8080",
+          "SERVICE_1_PORT_8080_TCP": "tcp://127.0.0.1:8080",
+          "SERVICE_1_PORT_8080_TCP_PROTO": "tcp",
+          "SERVICE_1_PORT_8080_TCP_PORT": "8080",
+          "SERVICE_1_PORT_8080_TCP_ADDR": "127.0.0.1",
+          "SERVICE_1_PORT_8081_TCP": "tcp://127.0.0.1:8081",
+          "SERVICE_1_PORT_8081_TCP_PROTO": "tcp",
+          "SERVICE_1_PORT_8081_TCP_PORT": "8081",
+          "SERVICE_1_PORT_8081_TCP_ADDR": "127.0.0.1",
+          "GLOBAL_TEST": "settings",
+          "BAD_STUFF": "",
+          "NOT_THIS": "",
+          "monger": "offish",
+          "not": "toss",
+          "bananna": "teacup",
+          "hatstand": "fish"
+        },
+        "host": "127.0.0.1",
+        "tail": true,
+        "monitor": false,
+        "monitor_excludes": [
+          "**/node_modules/**",
+          "**/.git/**",
+          "**/*.log"
+        ],
+        "delay_start": 0,
+        "restart_on_error": false,
+        "max_restarts": 5,
+        "auto_generate_environment": true,
+        "dns_suffix": "",
+        "dns_namespace": "",
+        "dns_enabled": false,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
+      },
+      "service_1": {
+        "type": "process",
+        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/composeSimpleV1/service_1",
+        "env_file": "./s1.env",
+        "run": "node index.js --eval debug ",
+        "ports": {
+          "main": [
+            "8080",
+            null
+          ],
+          "debug": [
+            "8081",
+            null
+          ]
+        },
+        "environment": {
+          "SERVICE_2_SERVICE_HOST": "127.0.0.1",
+          "SERVICE_2_SERVICE_PORT": "10000",
+          "SERVICE_2_PORT": "tcp://127.0.0.1:10000",
+          "SERVICE_2_PORT_10000_TCP": "tcp://127.0.0.1:10000",
+          "SERVICE_2_PORT_10000_TCP_PROTO": "tcp",
+          "SERVICE_2_PORT_10000_TCP_PORT": "10000",
+          "SERVICE_2_PORT_10000_TCP_ADDR": "127.0.0.1",
+          "REDIS_SERVICE_HOST": "127.0.0.1",
+          "REDIS_SERVICE_PORT": "6379",
+          "REDIS_PORT": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP_PROTO": "tcp",
+          "REDIS_PORT_6379_TCP_PORT": "6379",
+          "REDIS_PORT_6379_TCP_ADDR": "127.0.0.1",
+          "SERVICE_1_SERVICE_HOST": "127.0.0.1",
+          "SERVICE_1_SERVICE_PORT": "8080",
+          "SERVICE_1_PORT": "tcp://127.0.0.1:8080",
+          "SERVICE_1_PORT_8080_TCP": "tcp://127.0.0.1:8080",
+          "SERVICE_1_PORT_8080_TCP_PROTO": "tcp",
+          "SERVICE_1_PORT_8080_TCP_PORT": "8080",
+          "SERVICE_1_PORT_8080_TCP_ADDR": "127.0.0.1",
+          "SERVICE_1_PORT_8081_TCP": "tcp://127.0.0.1:8081",
+          "SERVICE_1_PORT_8081_TCP_PROTO": "tcp",
+          "SERVICE_1_PORT_8081_TCP_PORT": "8081",
+          "SERVICE_1_PORT_8081_TCP_ADDR": "127.0.0.1",
+          "GLOBAL_TEST": "settings",
+          "BAD_STUFF": "",
+          "NOT_THIS": "",
+          "monger": "offish",
+          "not": "toss",
+          "DEBUG_PORT": "8081",
+          "wibble": "",
+          "": ""
+        },
+        "name": "service_1",
+        "specific": {},
+        "host": "127.0.0.1",
+        "tail": true,
+        "monitor": true,
+        "monitor_excludes": [
+          "**/node_modules/**",
+          "**/.git/**",
+          "**/*.log"
+        ],
+        "delay_start": 0,
+        "restart_on_error": false,
+        "max_restarts": 5,
+        "auto_generate_environment": true,
+        "dns_suffix": "",
+        "dns_namespace": "",
+        "dns_enabled": false,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
+      }
+    }
+  }
+}

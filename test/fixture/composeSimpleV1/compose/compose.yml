@@ -1,0 +1,22 @@
+service_2:
+  build: ../service_2/
+  container_name: service_2
+  env_file:
+    - ./s2.env
+    - ./s22.env
+  environment:
+    RACK_ENV: development
+    NODE_ENV: ${NODE_ENV}
+    TEST: ${GLOBAL_TEST}
+    NO_WAY: ${BAD_STUFF}
+    GLOBAL_TEST: ${GLOBAL_TEST}
+redis:
+  image: redis
+  env_file:
+    - ./service_2/s2.env
+    - ./service_2/s22.env
+  ports:
+    - 6379:6379
+  volumes_from:
+    - redisdata
+

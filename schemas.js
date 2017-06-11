@@ -1,3 +1,4 @@
+/* eslint no-useless-escape: 0 */
 /*
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -40,11 +41,12 @@ module.exports.globalSchema = {
     delay_start: { type: 'integer' },
     restart_on_error: { type: 'boolean' },
     max_restarts: { type: 'integer' },
+    env_file: {oneOf: [{type: 'string'}, {type: 'array'}]},
     environment: {
       type: 'array',
       items: {
         type: 'string',
-        pattern: '^[A-Za-z0-9_]+=.+$'
+        pattern: '^[A-Za-z0-9_\{\}\$]+=.+$'
       }
     }
   }
@@ -68,6 +70,7 @@ module.exports.containerSchema = {
         type: 'string'
       }
     },
+    env_file: {oneOf: [{type: 'string'}, {type: 'array'}]},
     dns_enabled: { type: 'boolean' },
     dns_namespace: { type: 'string' },
     dns_suffix: { type: 'string' },
@@ -83,17 +86,19 @@ module.exports.containerSchema = {
     max_restarts: { type: 'integer' },
     repository_url: { type: 'string' },
     environment: {
-      type: 'array',
+      type: ['array', 'object'],
       items: {
-        type: 'string',
-        pattern: '^[A-Za-z0-9_]+=.+$'
+        oneOf: [
+          {type: 'string', pattern: '^[A-Za-z0-9_\{\}\$]+=.+$'},
+          {type: 'object', additionalProperties: {type: 'string'}}
+        ]
       }
     },
     ports: {
       type: 'array',
       items: {
         type: 'string',
-        pattern: '^[A-Za-z0-9_]+=[A-Za-z0-9_]+[A-Za-z0-9_:]*$'
+        pattern: '^[A-Za-z0-9_\{\}\$]+=[A-Za-z0-9_\{\}\$]+[A-Za-z0-9_:\{\}\$]*$'
       }
     }
   },
