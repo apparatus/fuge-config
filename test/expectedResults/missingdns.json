@@ -9,9 +9,7 @@
     "dns_enabled": true,
     "auto_generate_environment": true,
     "auto_port_start": 20000,
-    "environment": {
-      "FUGE": "ROCKS"
-    },
+    "environment": {},
     "host": "wibble",
     "delay_start": 1,
     "restart_on_error": true,
@@ -76,13 +74,13 @@
           "DNS_SUFFIX": "",
           "SERVICE_SERVICE_HOST": "wibble",
           "SERVICE_SERVICE_PORT": "20000",
-          "SERVICE_PORT": "tcp://wibble:20000",
+          "SERVICE_PORT": "3001",
           "SERVICE_PORT_20000_TCP": "tcp://wibble:20000",
           "SERVICE_PORT_20000_TCP_PROTO": "tcp",
           "SERVICE_PORT_20000_TCP_PORT": "20000",
           "SERVICE_PORT_20000_TCP_ADDR": "wibble",
-          "FUGE": "ROCKS",
-          "ONE": "TWO"
+          "ONE": "TWO",
+          "SERVICE_HOST": "bibble"
         },
         "host": "bibble",
         "ports": {
@@ -145,8 +143,9 @@
           "SERVICE_PORT_20000_TCP_PROTO": "tcp",
           "SERVICE_PORT_20000_TCP_PORT": "20000",
           "SERVICE_PORT_20000_TCP_ADDR": "wibble",
+          "ONE": "TWO",
           "FUGE": "DOUBLEROCKS",
-          "ONE": "TWO"
+          "SERVICE_HOST": "wibble"
         },
         "name": "service",
         "specific": {},
@@ -214,8 +213,7 @@
           "SERVICE_PORT_20000_TCP": "tcp://wibble:20000",
           "SERVICE_PORT_20000_TCP_PROTO": "tcp",
           "SERVICE_PORT_20000_TCP_PORT": "20000",
-          "SERVICE_PORT_20000_TCP_ADDR": "wibble",
-          "FUGE": "ROCKS"
+          "SERVICE_PORT_20000_TCP_ADDR": "wibble"
         },
         "host": "wibble",
         "tail": true,

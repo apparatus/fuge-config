@@ -91,3 +91,12 @@ test('load invalid config', function (t) {
   })
 })
 
+
+test('load invalid global config', function (t) {
+  t.plan(1)
+
+  loader.load(path.join(__dirname, '/fixture/invalidGlobal.yml'), function (err, system) {
+    t.notEqual(null, err, 'check err is not null')
+  })
+})
+

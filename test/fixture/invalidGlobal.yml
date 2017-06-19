@@ -2,9 +2,13 @@ fuge_global:
   run_containers: true
   tail: true
   monitor: true
-  monitor_excludes: true
+  monitor_excludes:
+    - '**/node_modules/**'
+    - '**/.git/**'
+    - '**/*.log'
+  wibble: bibble
 service_1:
-  type: 12
+  type: process 
   path: ./service_1
   env_file: ./s1.env
   run: node index.js --eval ${NODE_ENV} ${UNDEFINED_VAR}

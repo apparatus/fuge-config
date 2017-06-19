@@ -31,7 +31,6 @@ var _ = require('lodash')
 module.exports = function () {
 
   function generateEnvForContainer (system, key, sharedEnv) {
-    var pindex = 0
     var upcaseKey = key.toUpperCase()
 
     var host = system.topology.containers[key].host
@@ -39,6 +38,8 @@ module.exports = function () {
     _.each(_.keys(system.topology.containers[key].ports), function (pkey) {
       var port = system.topology.containers[key].ports[pkey][0]
 
+      system.topology.containers[key].environment['SERVICE_HOST'] = host
+      system.topology.containers[key].environment['SERVICE_PORT'] = port
       if (!system.topology.containers[key].environment[upcaseKey + '_SERVICE_PORT']) {
         system.topology.containers[key].environment[upcaseKey + '_SERVICE_HOST'] = host
         system.topology.containers[key].environment[upcaseKey + '_SERVICE_PORT'] = port
@@ -56,7 +57,6 @@ module.exports = function () {
       sharedEnv[upcaseKey + '_PORT_' + port + '_TCP_PROTO'] = 'tcp'
       sharedEnv[upcaseKey + '_PORT_' + port + '_TCP_PORT'] = port
       sharedEnv[upcaseKey + '_PORT_' + port + '_TCP_ADDR'] = host
-      ++pindex
     })
   }
 

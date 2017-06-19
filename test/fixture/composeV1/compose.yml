@@ -1,0 +1,44 @@
+service_2:
+  build: ./service_2/
+  container_name: service_2
+  ports:
+    - "3000"
+    - "3000-3005"
+    - "8000:8000"
+    - "9090-9091:8080-8081"
+    - "49100:22"
+    - "127.0.0.1:8001:8001"
+    - "127.0.0.1:7001-7005"
+    - "127.0.0.1:5000-5010:5000-5010"
+  env_file: './s2.env'
+  environment:
+    RACK_ENV: development
+    SHOW: 'true'
+    SESSION_SECRET: asdf
+service_4:
+  build: ./service_4/
+  env_file:
+    - ./s4_one.env
+    - ./s4_two.env
+  environment:
+    - RACK_ENV=development
+    - SHOW=true
+    - SESSION_SECRET=1234
+  ports:
+    - "3000"
+    - "3000-3005"
+redisdata:
+  image: redis
+  container_name: redisdata
+  command: /bin/true
+  volumes:
+    - /var/db/redis
+    - ./data:/data
+    - ../parent:/folder
+redis:
+  image: redis
+  ports:
+    - 6379:6379
+  volumes_from:
+    - redisdata
+

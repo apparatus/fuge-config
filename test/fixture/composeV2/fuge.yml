@@ -1,0 +1,24 @@
+fuge_global:
+  run_containers: true
+  dns_enabled: true
+  dns_host: 127.0.0.1
+  dns_port: 53053
+  dns_suffix: svc.cluster.local
+  dns_namespace: micro
+  tail: true
+  monitor: true
+  monitor_excludes:
+    - '**/node_modules/**'
+    - '**/.git/**'
+    - '**/*.log'
+service_1:
+  type: process 
+  path: ./service_1
+  run: node index.js
+  ports:
+    - main=8080
+  environment:
+    - wibble=bibble
+include:
+  - './compose.yml'
+

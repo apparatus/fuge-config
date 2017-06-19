@@ -11,9 +11,7 @@
     "dns_namespace": "testns",
     "auto_generate_environment": true,
     "auto_port_start": 20000,
-    "environment": {
-      "FUGE": "ROCKS"
-    },
+    "environment": {},
     "host": "wibble",
     "delay_start": 1,
     "restart_on_error": true,
@@ -73,8 +71,9 @@
           "DNS_PORT": 53053,
           "DNS_NAMESPACE": "testns",
           "DNS_SUFFIX": "svc.cluster.local",
-          "FUGE": "ROCKS",
-          "ONE": "TWO"
+          "ONE": "TWO",
+          "SERVICE_HOST": "bibble",
+          "SERVICE_PORT": "3001"
         },
         "host": "bibble",
         "ports": {
