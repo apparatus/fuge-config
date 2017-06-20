@@ -2,13 +2,14 @@
   "license": "MIT",
   "name": "fuge-config",
   "author": "Peter Elger (https://github.com/pelger)",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "contributors": [],
   "keywords": [
     "microservices",
-    "manager",
     "fuge",
-    "configuration"
+    "configuration",
+    "docker",
+    "kubernetes"
   ],
   "repository": {
     "type": "git",
