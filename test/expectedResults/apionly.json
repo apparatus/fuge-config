@@ -1,0 +1,369 @@
+{
+  "global": {
+    "run_containers": false,
+    "dns_enabled": true,
+    "dns_host": "127.0.0.1",
+    "dns_port": 53053,
+    "dns_suffix": "svc.cluster.local",
+    "dns_namespace": "pkg",
+    "tail": true,
+    "monitor": true,
+    "monitor_excludes": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/.log"
+    ],
+    "environment": {
+      "BOOTSTRAP_ENV": "qa-a",
+      "BOOTSTRAP_DC": "nw",
+      "CACHE_STRATEGY": "redis",
+      "LOG_LEVEL": "debug"
+    },
+    "container_engine_url": "",
+    "auto_generate_environment": true,
+    "delay_start": 0,
+    "restart_on_error": false,
+    "max_restarts": 5,
+    "host": "127.0.0.1",
+    "dns": {
+      "A": {
+        "pkgapi.pkg.svc.cluster.local": {
+          "address": "127.0.0.1"
+        },
+        "pkggiql.pkg.svc.cluster.local": {
+          "address": "127.0.0.1"
+        },
+        "vpsvc.pkg.svc.cluster.local": {
+          "address": "nw-fish-q01"
+        },
+        "redis.pkg.svc.cluster.local": {
+          "address": "127.0.0.1"
+        }
+      },
+      "SRV": {
+        "_pkgapi._tcp.pkgapi.pkg.svc.cluster.local": {
+          "address": "127.0.0.1",
+          "cname": "pkgapi.pkg.svc.cluster.local",
+          "port": "8081"
+        },
+        "_pkggiql._tcp.pkggiql.pkg.svc.cluster.local": {
+          "address": "127.0.0.1",
+          "cname": "pkggiql.pkg.svc.cluster.local",
+          "port": "8082"
+        },
+        "_vpsvc._tcp.vpsvc.pkg.svc.cluster.local": {
+          "address": "nw-fish-q01",
+          "cname": "vpsvc.pkg.svc.cluster.local",
+          "port": "8080"
+        },
+        "_redis._tcp.redis.pkg.svc.cluster.local": {
+          "address": "127.0.0.1",
+          "cname": "redis.pkg.svc.cluster.local",
+          "port": "6379"
+        }
+      }
+    }
+  },
+  "topology": {
+    "containers": {
+      "pkgapi": {
+        "type": "node",
+        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/bugfix/case1/dev/search-api/services/sh-api",
+        "run": "node index.js",
+        "ports": {
+          "pkgapi": [
+            "8081",
+            null
+          ]
+        },
+        "environment": {
+          "PKGAPI_SERVICE_HOST": "127.0.0.1",
+          "PKGAPI_SERVICE_PORT": "8081",
+          "PKGAPI_PORT": "tcp://127.0.0.1:8081",
+          "PKGAPI_PORT_8081_TCP": "tcp://127.0.0.1:8081",
+          "PKGAPI_PORT_8081_TCP_PROTO": "tcp",
+          "PKGAPI_PORT_8081_TCP_PORT": "8081",
+          "PKGAPI_PORT_8081_TCP_ADDR": "127.0.0.1",
+          "DNS_HOST": "127.0.0.1",
+          "DNS_PORT": 53053,
+          "DNS_NAMESPACE": "pkg",
+          "DNS_SUFFIX": "svc.cluster.local",
+          "PKGGIQL_SERVICE_HOST": "127.0.0.1",
+          "PKGGIQL_SERVICE_PORT": "8082",
+          "PKGGIQL_PORT": "tcp://127.0.0.1:8082",
+          "PKGGIQL_PORT_8082_TCP": "tcp://127.0.0.1:8082",
+          "PKGGIQL_PORT_8082_TCP_PROTO": "tcp",
+          "PKGGIQL_PORT_8082_TCP_PORT": "8082",
+          "PKGGIQL_PORT_8082_TCP_ADDR": "127.0.0.1",
+          "VPSVC_SERVICE_HOST": "nw-fish-q01",
+          "VPSVC_SERVICE_PORT": "8080",
+          "VPSVC_PORT": "tcp://nw-fish-q01:8080",
+          "VPSVC_PORT_8080_TCP": "tcp://nw-fish-q01:8080",
+          "VPSVC_PORT_8080_TCP_PROTO": "tcp",
+          "VPSVC_PORT_8080_TCP_PORT": "8080",
+          "VPSVC_PORT_8080_TCP_ADDR": "nw-fish-q01",
+          "REDIS_SERVICE_HOST": "127.0.0.1",
+          "REDIS_SERVICE_PORT": "6379",
+          "REDIS_PORT": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP_PROTO": "tcp",
+          "REDIS_PORT_6379_TCP_PORT": "6379",
+          "REDIS_PORT_6379_TCP_ADDR": "127.0.0.1",
+          "BOOTSTRAP_ENV": "qa-a",
+          "BOOTSTRAP_DC": "nw",
+          "CACHE_STRATEGY": "redis",
+          "LOG_LEVEL": "debug",
+          "REDIS_SERVICE_DB": "0",
+          "SERVICE_HOST": "127.0.0.1",
+          "SERVICE_PORT": "8081"
+        },
+        "name": "pkgapi",
+        "specific": {},
+        "host": "127.0.0.1",
+        "tail": true,
+        "monitor": true,
+        "monitor_excludes": [
+          "**/node_modules/**",
+          "**/.git/**",
+          "**/.log"
+        ],
+        "delay_start": 0,
+        "restart_on_error": false,
+        "max_restarts": 5,
+        "auto_generate_environment": true,
+        "dns_suffix": "svc.cluster.local",
+        "dns_namespace": "pkg",
+        "dns_enabled": true,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
+      },
+      "pkggiql": {
+        "type": "process",
+        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/bugfix/case1/dev/search-api/tools/sh-giql",
+        "run": "node server.js",
+        "ports": {
+          "pkggiql": [
+            "8082",
+            null
+          ]
+        },
+        "name": "pkggiql",
+        "specific": {},
+        "environment": {
+          "PKGAPI_SERVICE_HOST": "127.0.0.1",
+          "PKGAPI_SERVICE_PORT": "8081",
+          "PKGAPI_PORT": "tcp://127.0.0.1:8081",
+          "PKGAPI_PORT_8081_TCP": "tcp://127.0.0.1:8081",
+          "PKGAPI_PORT_8081_TCP_PROTO": "tcp",
+          "PKGAPI_PORT_8081_TCP_PORT": "8081",
+          "PKGAPI_PORT_8081_TCP_ADDR": "127.0.0.1",
+          "DNS_HOST": "127.0.0.1",
+          "DNS_PORT": 53053,
+          "DNS_NAMESPACE": "pkg",
+          "DNS_SUFFIX": "svc.cluster.local",
+          "PKGGIQL_SERVICE_HOST": "127.0.0.1",
+          "PKGGIQL_SERVICE_PORT": "8082",
+          "PKGGIQL_PORT": "tcp://127.0.0.1:8082",
+          "PKGGIQL_PORT_8082_TCP": "tcp://127.0.0.1:8082",
+          "PKGGIQL_PORT_8082_TCP_PROTO": "tcp",
+          "PKGGIQL_PORT_8082_TCP_PORT": "8082",
+          "PKGGIQL_PORT_8082_TCP_ADDR": "127.0.0.1",
+          "VPSVC_SERVICE_HOST": "nw-fish-q01",
+          "VPSVC_SERVICE_PORT": "8080",
+          "VPSVC_PORT": "tcp://nw-fish-q01:8080",
+          "VPSVC_PORT_8080_TCP": "tcp://nw-fish-q01:8080",
+          "VPSVC_PORT_8080_TCP_PROTO": "tcp",
+          "VPSVC_PORT_8080_TCP_PORT": "8080",
+          "VPSVC_PORT_8080_TCP_ADDR": "nw-fish-q01",
+          "REDIS_SERVICE_HOST": "127.0.0.1",
+          "REDIS_SERVICE_PORT": "6379",
+          "REDIS_PORT": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP_PROTO": "tcp",
+          "REDIS_PORT_6379_TCP_PORT": "6379",
+          "REDIS_PORT_6379_TCP_ADDR": "127.0.0.1",
+          "BOOTSTRAP_ENV": "qa-a",
+          "BOOTSTRAP_DC": "nw",
+          "CACHE_STRATEGY": "redis",
+          "LOG_LEVEL": "debug",
+          "SERVICE_HOST": "127.0.0.1",
+          "SERVICE_PORT": "8082"
+        },
+        "host": "127.0.0.1",
+        "tail": true,
+        "monitor": true,
+        "monitor_excludes": [
+          "**/node_modules/**",
+          "**/.git/**",
+          "**/.log"
+        ],
+        "delay_start": 0,
+        "restart_on_error": false,
+        "max_restarts": 5,
+        "auto_generate_environment": true,
+        "dns_suffix": "svc.cluster.local",
+        "dns_namespace": "pkg",
+        "dns_enabled": true,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
+      },
+      "vpsvc": {
+        "type": "container",
+        "host": "nw-fish-q01",
+        "ports": {
+          "vpsvc": [
+            "8080",
+            null
+          ]
+        },
+        "name": "vpsvc",
+        "specific": {},
+        "environment": {
+          "PKGAPI_SERVICE_HOST": "127.0.0.1",
+          "PKGAPI_SERVICE_PORT": "8081",
+          "PKGAPI_PORT": "tcp://127.0.0.1:8081",
+          "PKGAPI_PORT_8081_TCP": "tcp://127.0.0.1:8081",
+          "PKGAPI_PORT_8081_TCP_PROTO": "tcp",
+          "PKGAPI_PORT_8081_TCP_PORT": "8081",
+          "PKGAPI_PORT_8081_TCP_ADDR": "127.0.0.1",
+          "DNS_HOST": "127.0.0.1",
+          "DNS_PORT": 53053,
+          "DNS_NAMESPACE": "pkg",
+          "DNS_SUFFIX": "svc.cluster.local",
+          "PKGGIQL_SERVICE_HOST": "127.0.0.1",
+          "PKGGIQL_SERVICE_PORT": "8082",
+          "PKGGIQL_PORT": "tcp://127.0.0.1:8082",
+          "PKGGIQL_PORT_8082_TCP": "tcp://127.0.0.1:8082",
+          "PKGGIQL_PORT_8082_TCP_PROTO": "tcp",
+          "PKGGIQL_PORT_8082_TCP_PORT": "8082",
+          "PKGGIQL_PORT_8082_TCP_ADDR": "127.0.0.1",
+          "VPSVC_SERVICE_HOST": "nw-fish-q01",
+          "VPSVC_SERVICE_PORT": "8080",
+          "VPSVC_PORT": "tcp://nw-fish-q01:8080",
+          "VPSVC_PORT_8080_TCP": "tcp://nw-fish-q01:8080",
+          "VPSVC_PORT_8080_TCP_PROTO": "tcp",
+          "VPSVC_PORT_8080_TCP_PORT": "8080",
+          "VPSVC_PORT_8080_TCP_ADDR": "nw-fish-q01",
+          "REDIS_SERVICE_HOST": "127.0.0.1",
+          "REDIS_SERVICE_PORT": "6379",
+          "REDIS_PORT": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP_PROTO": "tcp",
+          "REDIS_PORT_6379_TCP_PORT": "6379",
+          "REDIS_PORT_6379_TCP_ADDR": "127.0.0.1",
+          "BOOTSTRAP_ENV": "qa-a",
+          "BOOTSTRAP_DC": "nw",
+          "CACHE_STRATEGY": "redis",
+          "LOG_LEVEL": "debug",
+          "SERVICE_HOST": "nw-fish-q01",
+          "SERVICE_PORT": "8080"
+        },
+        "tail": true,
+        "monitor": false,
+        "monitor_excludes": [
+          "**/node_modules/**",
+          "**/.git/**",
+          "**/.log"
+        ],
+        "delay_start": 0,
+        "restart_on_error": false,
+        "max_restarts": 5,
+        "auto_generate_environment": true,
+        "dns_suffix": "svc.cluster.local",
+        "dns_namespace": "pkg",
+        "dns_enabled": true,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
+      },
+      "redis": {
+        "type": "container",
+        "image": "redis",
+        "ports": {
+          "redis": [
+            "6379",
+            null
+          ]
+        },
+        "name": "redis",
+        "specific": {},
+        "environment": {
+          "PKGAPI_SERVICE_HOST": "127.0.0.1",
+          "PKGAPI_SERVICE_PORT": "8081",
+          "PKGAPI_PORT": "tcp://127.0.0.1:8081",
+          "PKGAPI_PORT_8081_TCP": "tcp://127.0.0.1:8081",
+          "PKGAPI_PORT_8081_TCP_PROTO": "tcp",
+          "PKGAPI_PORT_8081_TCP_PORT": "8081",
+          "PKGAPI_PORT_8081_TCP_ADDR": "127.0.0.1",
+          "DNS_HOST": "127.0.0.1",
+          "DNS_PORT": 53053,
+          "DNS_NAMESPACE": "pkg",
+          "DNS_SUFFIX": "svc.cluster.local",
+          "PKGGIQL_SERVICE_HOST": "127.0.0.1",
+          "PKGGIQL_SERVICE_PORT": "8082",
+          "PKGGIQL_PORT": "tcp://127.0.0.1:8082",
+          "PKGGIQL_PORT_8082_TCP": "tcp://127.0.0.1:8082",
+          "PKGGIQL_PORT_8082_TCP_PROTO": "tcp",
+          "PKGGIQL_PORT_8082_TCP_PORT": "8082",
+          "PKGGIQL_PORT_8082_TCP_ADDR": "127.0.0.1",
+          "VPSVC_SERVICE_HOST": "nw-fish-q01",
+          "VPSVC_SERVICE_PORT": "8080",
+          "VPSVC_PORT": "tcp://nw-fish-q01:8080",
+          "VPSVC_PORT_8080_TCP": "tcp://nw-fish-q01:8080",
+          "VPSVC_PORT_8080_TCP_PROTO": "tcp",
+          "VPSVC_PORT_8080_TCP_PORT": "8080",
+          "VPSVC_PORT_8080_TCP_ADDR": "nw-fish-q01",
+          "REDIS_SERVICE_HOST": "127.0.0.1",
+          "REDIS_SERVICE_PORT": "6379",
+          "REDIS_PORT": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP": "tcp://127.0.0.1:6379",
+          "REDIS_PORT_6379_TCP_PROTO": "tcp",
+          "REDIS_PORT_6379_TCP_PORT": "6379",
+          "REDIS_PORT_6379_TCP_ADDR": "127.0.0.1",
+          "BOOTSTRAP_ENV": "qa-a",
+          "BOOTSTRAP_DC": "nw",
+          "CACHE_STRATEGY": "redis",
+          "LOG_LEVEL": "debug",
+          "SERVICE_HOST": "127.0.0.1",
+          "SERVICE_PORT": "6379"
+        },
+        "host": "127.0.0.1",
+        "tail": true,
+        "monitor": false,
+        "monitor_excludes": [
+          "**/node_modules/**",
+          "**/.git/**",
+          "**/.log"
+        ],
+        "delay_start": 0,
+        "restart_on_error": false,
+        "max_restarts": 5,
+        "auto_generate_environment": true,
+        "dns_suffix": "svc.cluster.local",
+        "dns_namespace": "pkg",
+        "dns_enabled": true,
+        "process": {
+          "history": [],
+          "flags": {},
+          "child": null,
+          "colour": null,
+          "monitor": null
+        }
+      }
+    }
+  }
+}

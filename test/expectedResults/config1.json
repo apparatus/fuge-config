@@ -12,7 +12,9 @@
     "dns_suffix": "svc.cluster.local",
     "auto_generate_environment": true,
     "auto_port_start": 20000,
-    "environment": {},
+    "environment": {
+      "FUGE": "ROCKS"
+    },
     "host": "wibble",
     "delay_start": 1,
     "restart_on_error": true,
@@ -79,6 +81,7 @@
           "SERVICE_PORT_20000_TCP_PROTO": "tcp",
           "SERVICE_PORT_20000_TCP_PORT": "20000",
           "SERVICE_PORT_20000_TCP_ADDR": "wibble",
+          "FUGE": "ROCKS",
           "ONE": "TWO",
           "THREE": "\"BASE64STRING==\"",
           "SERVICE_HOST": "bibble"
@@ -144,8 +147,8 @@
           "SERVICE_PORT_20000_TCP_PROTO": "tcp",
           "SERVICE_PORT_20000_TCP_PORT": "20000",
           "SERVICE_PORT_20000_TCP_ADDR": "wibble",
-          "ONE": "TWO",
           "FUGE": "DOUBLEROCKS",
+          "ONE": "TWO",
           "SERVICE_HOST": "wibble"
         },
         "name": "service",
@@ -215,7 +218,8 @@
           "SERVICE_PORT_20000_TCP": "tcp://wibble:20000",
           "SERVICE_PORT_20000_TCP_PROTO": "tcp",
           "SERVICE_PORT_20000_TCP_PORT": "20000",
-          "SERVICE_PORT_20000_TCP_ADDR": "wibble"
+          "SERVICE_PORT_20000_TCP_ADDR": "wibble",
+          "FUGE": "ROCKS"
         },
         "host": "wibble",
         "tail": true,

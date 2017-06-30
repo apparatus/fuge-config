@@ -237,8 +237,8 @@ module.exports = function () {
 
 
   function buildGlobalEnvironment (yamlPath, system) {
-    system.global.environment = ev.loadEnvFiles(yamlPath, system.global)
-    system.global.environment = _.merge(system.global.environment, ev.buildEnvironmentBlock(system.global.environment))
+    system.global.environment = ev.buildEnvironmentBlock(system.global.environment)
+    system.global.environment = _.merge(system.global.environment, ev.loadEnvFiles(yamlPath, system.global))
     if (!system.global.host) {
       system.global.host = '127.0.0.1'
     }
