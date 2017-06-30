@@ -45,6 +45,7 @@ reset('nodefaults', 'nodefaults')
 reset('composeV1/fuge', 'complexPorts')
 reset('composeV2/fuge', 'complexPortsV2')
 reset('composeV3/fuge', 'complexPortsV3')
+reset('bugfix/case1/fuge/fuge', 'apionly')
 
 process.env.NODE_ENV = 'debug'
 reset('composeSimpleV1/fuge', 'simpleCompose')

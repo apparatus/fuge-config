@@ -77,12 +77,14 @@ module.exports = function () {
   function buildEnvironmentBlock (envIn) {
     var env = {}
 
-    if (_.isArray(envIn) && envIn.length > 0) {
-      _.each(envIn, function (ev) {
-        var k = ev.substring(0, ev.indexOf('='))
-        var v = ev.substring(ev.indexOf('=') + 1)
-        env[k] = v
-      })
+    if (_.isArray(envIn)) {
+      if (envIn.length > 0) {
+        _.each(envIn, function (ev) {
+          var k = ev.substring(0, ev.indexOf('='))
+          var v = ev.substring(ev.indexOf('=') + 1)
+          env[k] = v
+        })
+      }
     } else if (_.isObject(envIn)) {
       env = envIn
     }

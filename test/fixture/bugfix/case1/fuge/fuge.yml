@@ -1,0 +1,43 @@
+fuge_global:
+  run_containers: false
+  dns_enabled: true
+  dns_host: 127.0.0.1
+  dns_port: 53053
+  dns_suffix: svc.cluster.local
+  dns_namespace: pkg
+  tail: true
+  monitor: true
+  monitor_excludes: 
+    - '**/node_modules/**'
+    - '**/.git/**'
+    - '**/.log'
+  environment:
+   - "BOOTSTRAP_ENV=qa-a"
+   - BOOTSTRAP_DC=nw
+   - "CACHE_STRATEGY=redis"
+   - LOG_LEVEL=debug
+pkgapi:
+  type: node
+  path: ../dev/search-api/services/sh-api
+  run: node index.js
+  ports:
+    - pkgapi=8081
+  environment:
+   - "REDIS_SERVICE_DB=0"
+pkggiql:
+  type: process
+  path: ../dev/search-api/tools/sh-giql
+  run: node server.js
+  ports:
+    - pkggiql=8082
+vpsvc:
+  type: container
+  host: nw-fish-q01
+  ports:
+    - vpsvc=8080
+redis:
+  type: container
+  image: redis
+  ports:
+    - redis=6379
+
