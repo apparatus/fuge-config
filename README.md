@@ -82,6 +82,9 @@ fuge_global:
   dns_enabled: true
   dns_namespace: testns
   dns_suffix: svc.cluster.local
+  dns_external:
+    - "mydatabse.mydomain.internal.com IN A 192.0.2.1"
+    - "_main._tcp.mydatabse.mydomain.internal.com IN SRV 0 5 5060 mydatabase.mydomain.internal.com"
   auto_generate_environment: true
   auto_port_start: 20000
   environment:
@@ -230,6 +233,11 @@ Valid global settings are as follows:
 <tr><td>dns_suffix</td>
       <td>string</td>
       <td>Used as a global suffix during dns name generation</td>
+      <td>''</td></tr>
+
+<tr><td>dns_external</td>
+      <td>array of string</td>
+      <td>inject addtional dns records into the fuge dns server. Can be used to connect to external databases during development</td>
       <td>''</td></tr>
 
 <tr><td>auto_generate_environment</td>

@@ -36,6 +36,12 @@ module.exports.globalSchema = {
     dns_port: { type: 'integer' },
     dns_namespace: { type: 'string' },
     dns_suffix: { type: 'string' },
+    dns_external: {
+      type: 'array',
+      items: {
+        type: 'string'
+      }
+    },
     auto_generate_environment: { type: 'boolean' },
     auto_port_start: { type: 'integer' },
     delay_start: { type: 'integer' },
