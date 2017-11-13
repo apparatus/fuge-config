@@ -22,6 +22,7 @@ var Validator = require('jsonschema').Validator
 var schemas = require('./schemas')
 var inc = require('./includes')()
 var kubeEnv = require('./kubeEnv')()
+var extDns = require('./externalDns')()
 var ev = require('./environment')()
 
 
@@ -219,6 +220,11 @@ module.exports = function () {
           kubeEnv.generateDnsForContainer(system, key)
         }
       })
+
+      // add in addtional external dns_entries if needed
+      if (system.global.dns_external) {
+        extDns.addExternalDns(system)
+      }
 
       // merge the global shared env into each container if required
       if (system.global.auto_generate_environment) {
