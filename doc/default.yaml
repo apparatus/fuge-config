@@ -1,7 +1,7 @@
 # fuge configuration
 
 # global configuration settings here affect behaviour of all managed processes
-fuge_global: 
+fuge_global:
 
   # run docker containers at the specified phases (or false)
   run_containers: false
@@ -13,17 +13,19 @@ fuge_global:
   monitor: true
 
   # exclude the following regular expression matches from monitoring
-  monitor_excludes: 
+  monitor_excludes:
     - /node_modules|\.git|\.log/mgi,
 
+  # default group for all. unless custom groups are added to fuge.yml
+  group: default
 
   # run internal dns server with the following settigs
   dns: true
-  #dns_prefix: 
+  #dns_prefix:
   dns_suffix: .internal.com
 
   # auto generate environment variables for simple service discovery
-  auto_generate_environment: true 
+  auto_generate_environment: true
   auto_port_start: 10000
 
   # global environment variables set in all processes
@@ -36,7 +38,7 @@ fuge_global:
   # restart a process on error - overrideaable defaults to false
   restart_on_error: true
   maximum_restarts: 5
-  
+
 
 # services
 frontend:
@@ -52,11 +54,11 @@ frontend:
   environment:
     - ONE=TWO              # environment for this process, overrides any global values
   ports:
-    - http=10000           # if ports are set these will be used to auto generate <service>_<proto>_PORT environment values 
+    - http=10000           # if ports are set these will be used to auto generate <service>_<proto>_PORT environment values
     - tcp=100001           # and / or dns srv resource records. If only one port is set fuge will also generate <service>_PORT variables
 
 # containers - fuge will use the container settings to generate service discovery information for environment variables or dns. It will optionally
-#              run these containers (assuming docker). 
+#              run these containers (assuming docker).
 mongo:
   type:container
   image: wibble                # the container image to pull and run
@@ -64,7 +66,7 @@ mongo:
   environment:
     - ONE=TWO                  # environment for this container, overrides any global values
   ports:
-    - http=10000:80            # if ports are set these will be used to auto generate <service>_<proto>_PORT environment values 
+    - http=10000:80            # if ports are set these will be used to auto generate <service>_<proto>_PORT environment values
     - tcp=100001:1234          # and / or dns srv resource records. If only one port is set fuge will also generate <service>_PORT variables
                                # these will also be passed to the docker engine using a -p argument http=1000:80 => -p 10000:80
 
