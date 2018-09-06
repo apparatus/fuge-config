@@ -69,8 +69,10 @@ module.exports = function () {
             p = path.resolve(path.join(path.dirname(yamlPath), system.topology.containers[key].path))
           }
           if (!fs.existsSync(p)) {
-            message += 'element: ' + key + ', path does not exist: ' + p + '\n'
-          }
+            system.topology.containers[key].path=null
+            system.topology.containers[key].status='disabled'
+            console.warn('[' + key + '] will be disabled, as the path does not exist: ' + p )
+          }else{ system.topology.containers[key].status='enabled'}
         }
       })
     }
