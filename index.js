@@ -61,18 +61,20 @@ module.exports = function () {
         if (result.errors && result.errors.length > 0) {
           _.each(result.errors, function (error) {
             message += 'element: ' + key + ', error:  ' + error.stack + '\n'
+
           })
         }
+
         if (system.topology.containers[key].path) {
           var p = system.topology.containers[key].path
           if (!path.isAbsolute(p)) {
             p = path.resolve(path.join(path.dirname(yamlPath), system.topology.containers[key].path))
           }
           if (!fs.existsSync(p)) {
-            system.topology.containers[key].path=null
-            system.topology.containers[key].status='disabled'
-            console.warn('[' + key + '] will be disabled, as the path does not exist: ' + p )
-          }else{ system.topology.containers[key].status='enabled'}
+            system.topology.containers[key].path = null
+            system.topology.containers[key].status = 'disabled'
+            console.warn('[' + key + '] will be disabled, as the path does not exist: ' + p)
+          } else { system.topology.containers[key].status = 'enabled' }
         }
       })
     }
@@ -97,6 +99,7 @@ module.exports = function () {
     if (!system.global.hasOwnProperty('delay_start')) { system.global.delay_start = 0 }
     if (!system.global.hasOwnProperty('restart_on_error')) { system.global.restart_on_error = false }
     if (!system.global.hasOwnProperty('max_restarts')) { system.global.max_restarts = 5 }
+    if (!system.global.hasOwnProperty('group')) { system.global.group = 'default' }
   }
 
 
@@ -155,6 +158,7 @@ module.exports = function () {
         // set hostname for this container to global default if not set
         if (!system.topology.containers[key].host) {
           system.topology.containers[key].host = system.global.host
+          console.warn('...test host= ' + system.global.host)
         }
 
         // set tail behaviour for this container to global default if not set
