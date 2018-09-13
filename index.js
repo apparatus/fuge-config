@@ -149,6 +149,7 @@ module.exports = function () {
             var s = port.split('=')
             var t = s[1].split(':')
             ports[s[0]] = [t[0], t[1]]
+            console.warn(' jjjj Port t0 t1= ' + port + ' , t0= ' + t[0] + ' , t1= ' + t[1])
           })
           system.topology.containers[key].ports = _.cloneDeep(ports)
         } else {
@@ -264,6 +265,7 @@ module.exports = function () {
 
     try {
       yml = yaml.safeLoad(fs.readFileSync(yamlPath, 'utf8'))
+      console.warn('yml= ' + Object.entries(yml))
       _.merge(system.topology.containers, inc.process(yamlPath, yml))
     } catch (ex) {
       // console.log(ex)
@@ -287,11 +289,12 @@ module.exports = function () {
       ev.interpolate(system)
       cb(null, system)
     })
+
+
   }
 
-
-
   return {
+
     load: load
   }
 }
