@@ -294,7 +294,7 @@ module.exports = function () {
   }
 
   return {
-
+    expandContainers: expandContainers,
     load: load
   }
 }
