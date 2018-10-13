@@ -50,13 +50,6 @@ module.exports = function () {
     var env = {}
     var block
 
-    if (typeof obj === 'object' && obj !== null) {
-      console.warn('\n objjj=... ' + Object.entries(obj))
-    } else {
-      console.warn('\n obj=... ' + obj)
-    }
-
-
     if (obj.env_file) {
       if (_.isArray(obj.env_file)) {
         _.each(obj.env_file, function (envFile) {
@@ -156,10 +149,48 @@ module.exports = function () {
   }
 
 
+
+  function interpolate2 (system) {
+    if (system.topology.containers && _.keys(system.topology.containers).length > 0) {
+      _.each(_.keys(system.topology.containers), function (key) {
+        var container = system.topology.containers[key]
+        var cstr = container
+        var envVar
+        var value
+
+        if (/\$\{([a-zA-Z0-9-_]+)\}/g.test(cstr)) {
+          while ((envVar = /\$\{([a-zA-Z0-9-_]+)\}/g.exec(cstr)) !== null) {
+            if (container.environment[envVar[1]]) {
+              if (/\$\{([a-zA-Z0-9-_]+)\}/g.test(container.environment[envVar[1]])) {
+                value = ''
+              } else {
+                value = container.environment[envVar[1]]
+              }
+              cstr = cstr.replace(new RegExp('\\$\\{' + envVar[1] + '\\}', 'g'), value)
+            } else {
+              if ((value = findEnvVar(system, envVar[1])) !== null) {
+                if (/\$\{([a-zA-Z0-9-_]+)\}/g.test(value)) {
+                  value = ''
+                }
+                cstr = cstr.replace(new RegExp('\\$\\{' + envVar[1] + '\\}', 'g'), value)
+              } else {
+                cstr = cstr.replace(new RegExp('\\$\\{' + envVar[1] + '\\}', 'g'), '')
+              }
+            }
+          }
+          system.topology.containers[key] = JSON.parse(cstr)
+        }
+      })
+    }
+  }
+
+
+
   return {
     loadEnvFile,
     loadEnvFiles,
     buildEnvironmentBlock,
+    interpolate2,
     interpolate
   }
 }

@@ -61,10 +61,8 @@ module.exports = function () {
         if (result.errors && result.errors.length > 0) {
           _.each(result.errors, function (error) {
             message += 'element: ' + key + ', error:  ' + error.stack + '\n'
-
           })
         }
-
         if (system.topology.containers[key].path) {
           var p = system.topology.containers[key].path
           if (!path.isAbsolute(p)) {
@@ -77,6 +75,43 @@ module.exports = function () {
           } else { system.topology.containers[key].status = 'enabled' }
         }
       })
+    }
+    cb(message.length > 0 ? message : null)
+  }
+
+
+
+  function revalidateInput (yamlPath, system, key, cb) {
+    var v = new Validator()
+    var result = v.validate(system.global, schemas.globalSchema)
+    var message = ''
+
+    if (result.errors && result.errors.length > 0) {
+      _.each(result.errors, function (error) {
+        message += 'global settings: ' + error.stack + '\n'
+      })
+    }
+
+    if (system.topology.containers && _.keys(system.topology.containers).length > 0) {
+      // _.each(_.keys(system.topology.containers), function (key) {
+      result = v.validate(system.topology.containers[key], schemas.containerSchema)
+      if (result.errors && result.errors.length > 0) {
+        _.each(result.errors, function (error) {
+          message += 'element: ' + key + ', error:  ' + error.stack + '\n'
+        })
+      }
+      if (system.topology.containers[key].path) {
+        var p = system.topology.containers[key].path
+        if (!path.isAbsolute(p)) {
+          p = path.resolve(path.join(path.dirname(yamlPath), system.topology.containers[key].path))
+        }
+        if (!fs.existsSync(p)) {
+          system.topology.containers[key].path = null
+          system.topology.containers[key].status = 'disabled'
+          console.warn('[' + key + '] will be disabled, as the path does not exist: ' + p)
+        } else { system.topology.containers[key].status = 'enabled' }
+      }
+      // })
     }
     cb(message.length > 0 ? message : null)
   }
@@ -100,6 +135,8 @@ module.exports = function () {
     if (!system.global.hasOwnProperty('restart_on_error')) { system.global.restart_on_error = false }
     if (!system.global.hasOwnProperty('max_restarts')) { system.global.max_restarts = 5 }
     if (!system.global.hasOwnProperty('group')) { system.global.group = 'default' }
+    if (!system.global.hasOwnProperty('terminate')) { system.global.terminate = 'SIGKILL' }
+
   }
 
 
@@ -149,7 +186,6 @@ module.exports = function () {
             var s = port.split('=')
             var t = s[1].split(':')
             ports[s[0]] = [t[0], t[1]]
-            console.warn(' jjjj Port t0 t1= ' + port + ' , t0= ' + t[0] + ' , t1= ' + t[1])
           })
           system.topology.containers[key].ports = _.cloneDeep(ports)
         } else {
@@ -158,8 +194,8 @@ module.exports = function () {
 
         // set hostname for this container to global default if not set
         if (!system.topology.containers[key].host) {
+
           system.topology.containers[key].host = system.global.host
-          console.warn('...test host= ' + system.global.host)
         }
 
         // set tail behaviour for this container to global default if not set
@@ -196,6 +232,11 @@ module.exports = function () {
           system.topology.containers[key].max_restarts = system.global.max_restarts
         }
 
+
+        // set termination behaviour for this container to global default if not set
+        if (!system.topology.containers[key].hasOwnProperty('terminate')) {
+          system.topology.containers[key].terminate = system.global.terminate
+        }
 
         // auto generate environment block for this container if required
         if (!system.topology.containers[key].hasOwnProperty('auto_generate_environment')) {
@@ -249,9 +290,159 @@ module.exports = function () {
 
 
 
+  function reexpandContainers (yamlPath, system, container) {
+    var env = {}
+    var ports = {}
+    var sharedEnv = {}
+    var servicePortAuto
+    var key = container.name
+    if (system.global.auto_generate_environment) {
+      servicePortAuto = system.global.auto_port_start || 10000
+    }
+
+    if (system.topology.containers && _.keys(system.topology.containers).length > 0) {
+      // _.each(_.keys(system.topology.containers), function (key) {
+
+        // auto assign a port number if rquired
+      if (system.global.auto_generate_environment) {
+        if (!system.topology.containers[key].ports || system.topology.containers[key].ports.length === 0) {
+          system.topology.containers[key].ports = ['main=' + servicePortAuto]
+          ++servicePortAuto
+        }
+      }
+
+        // replace relative path with absolute
+      if (system.topology.containers[key].path) {
+          // test if absolute already
+        if (!path.isAbsolute(system.topology.containers[key].path)) {
+          system.topology.containers[key].path = path.resolve(path.join(path.dirname(yamlPath), system.topology.containers[key].path))
+        }
+      }
+
+        // create environment block for this container
+      env = ev.loadEnvFiles(yamlPath, system.topology.containers[key])
+      if (system.topology.containers[key].environment) {
+        env = _.merge(env, ev.buildEnvironmentBlock(system.topology.containers[key].environment))
+        system.topology.containers[key].environment = _.merge(_.cloneDeep(system.global.environment), env)
+      } else {
+        system.topology.containers[key].environment = _.merge(_.cloneDeep(system.global.environment), env)
+      }
+
+        // create ports block for this container
+      if (system.topology.containers[key].ports && system.topology.containers[key].ports.length > 0) {
+        ports = {}
+        _.each(system.topology.containers[key].ports, function (port) {
+          var s = port.split('=')
+          var t = s[1].split(':')
+          ports[s[0]] = [t[0], t[1]]
+        })
+        system.topology.containers[key].ports = _.cloneDeep(ports)
+      } else {
+        system.topology.containers[key].ports = {}
+      }
+
+        // set hostname for this container to global default if not set
+      if (!system.topology.containers[key].host) {
+        system.topology.containers[key].host = system.global.host
+      }
+
+        // set tail behaviour for this container to global default if not set
+      if (!system.topology.containers[key].hasOwnProperty('tail')) {
+        system.topology.containers[key].tail = system.global.tail
+      }
+
+        // set monitor behaviour for this container to global default if not set
+      if (!system.topology.containers[key].hasOwnProperty('monitor')) {
+        if (system.topology.containers[key].type === 'process' || system.topology.containers[key].type === 'node') {
+          system.topology.containers[key].monitor = system.global.monitor
+        } else {
+          system.topology.containers[key].monitor = false
+        }
+      }
+
+        // set monitor exclude array for this container to global default if not set
+      if (!system.topology.containers[key].monitor_excludes) {
+        system.topology.containers[key].monitor_excludes = system.global.monitor_excludes
+      }
+
+        // set delay start for this container to global default if not set
+      if (!system.topology.containers[key].hasOwnProperty('delay_start')) {
+        system.topology.containers[key].delay_start = system.global.delay_start
+      }
+
+        // set restart behaviour for this container to global default if not set
+      if (!system.topology.containers[key].hasOwnProperty('restart_on_error')) {
+        system.topology.containers[key].restart_on_error = system.global.restart_on_error
+      }
+
+        // set restart count behaviour for this container to global default if not set
+      if (!system.topology.containers[key].hasOwnProperty('max_restarts')) {
+        system.topology.containers[key].max_restarts = system.global.max_restarts
+      }
+
+
+        // auto generate environment block for this container if required
+      if (!system.topology.containers[key].hasOwnProperty('auto_generate_environment')) {
+        system.topology.containers[key].auto_generate_environment = system.global.auto_generate_environment
+      }
+      if (system.topology.containers[key].auto_generate_environment) {
+        kubeEnv.regenerateEnvForContainer(system, key, sharedEnv)
+      }
+
+        // set dns suffix for this container to global default if not set
+      if (!system.topology.containers[key].dns_suffix) {
+        system.topology.containers[key].dns_suffix = system.global.dns_suffix
+      }
+
+        // set dns namespace for this container to global default if not set
+      if (!system.topology.containers[key].dns_namespace) {
+        system.topology.containers[key].dns_namespace = system.global.dns_namespace
+      }
+
+        // generate dns entries for this container if required
+      if (!system.topology.containers[key].hasOwnProperty('dns_enabled')) {
+        system.topology.containers[key].dns_enabled = system.global.dns_enabled
+      }
+      if (system.topology.containers[key].dns_enabled) {
+        sharedEnv.DNS_HOST = system.global.dns_host
+        sharedEnv.DNS_PORT = system.global.dns_port
+        sharedEnv.DNS_NAMESPACE = system.global.dns_namespace
+        sharedEnv.DNS_SUFFIX = system.global.dns_suffix
+        kubeEnv.generateDnsForContainer(system, key)
+      }
+      // })
+
+      // add in addtional external dns_entries if needed
+      if (system.global.dns_external) {
+        extDns.addExternalDns(system)
+      }
+
+      // merge the global shared env into each container if required
+      if (system.global.auto_generate_environment) {
+        // _.each(_.keys(system.topology.containers), function (key) {
+        system.topology.containers[key].environment = _.merge(_.cloneDeep(sharedEnv), system.topology.containers[key].environment)
+        // })
+      }
+
+      // add a blank process block to each container
+      // _.each(_.keys(system.topology.containers), function (key) {
+      system.topology.containers[key].process = { history: [], flags: {}, child: null, colour: null, monitor: null }
+      // })
+    }
+  }
+
+
+
   function buildGlobalEnvironment (yamlPath, system) {
     system.global.environment = ev.buildEnvironmentBlock(system.global.environment)
     system.global.environment = _.merge(system.global.environment, ev.loadEnvFiles(yamlPath, system.global))
+    if (!system.global.host) {
+      system.global.host = '127.0.0.1'
+    }
+  }
+
+
+  function rebuildGlobalEnvironment (system) {
     if (!system.global.host) {
       system.global.host = '127.0.0.1'
     }
@@ -265,7 +456,6 @@ module.exports = function () {
 
     try {
       yml = yaml.safeLoad(fs.readFileSync(yamlPath, 'utf8'))
-      console.warn('yml= ' + Object.entries(yml))
       _.merge(system.topology.containers, inc.process(yamlPath, yml))
     } catch (ex) {
       // console.log(ex)
@@ -289,13 +479,56 @@ module.exports = function () {
       ev.interpolate(system)
       cb(null, system)
     })
-
-
+    return system
   }
 
+
+
+  function reload (yamlPath, system, container, cb) {
+    var yml
+    var key = container.name
+  // var system = { global: {}, topology: { containers: {} } }
+
+    try {
+      yml = yaml.safeLoad(fs.readFileSync(yamlPath, 'utf8'))
+      _.merge(system.topology.containers, inc.process(yamlPath, yml))
+    } catch (ex) {
+    // console.log(ex)
+      return cb(ex.message)
+    }
+
+    system.global = yml.fuge_global || {}
+  // _.each(_.keys(yml), function (key) {
+    if (key !== 'fuge_global') {
+      system.topology.containers[key] = yml[key]
+      system.topology.containers[key].name = key
+      system.topology.containers[key].specific = {}
+    }
+  // })
+
+    revalidateInput(yamlPath, system, key, function (err) {
+      if (err) { return cb(err) }
+      setGlobalDefaults(system)
+      rebuildGlobalEnvironment(system)
+      reexpandContainers(yamlPath, system, container)
+      ev.interpolate2(system)
+      cb(null, system)
+    })
+    return system
+  }
+
+
+
+/** ***ggggssss */
+
+
+
   return {
-    expandContainers: expandContainers,
-    load: load
+    load: load,
+    reload: reload,
+    revalidateInput: revalidateInput
+
+
   }
 }
 

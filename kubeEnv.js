@@ -34,12 +34,41 @@ module.exports = function () {
     var upcaseKey = key.toUpperCase()
 
     var host = system.topology.containers[key].host
+    _.each(_.keys(system.topology.containers[key].ports), function (pkey) {
+      var port = system.topology.containers[key].ports[pkey][0]
+      system.topology.containers[key].environment['SERVICE_HOST'] = host
+      system.topology.containers[key].environment['SERVICE_PORT'] = port
+      if (!system.topology.containers[key].environment[upcaseKey + '_SERVICE_PORT']) {
+        system.topology.containers[key].environment[upcaseKey + '_SERVICE_HOST'] = host
+        system.topology.containers[key].environment[upcaseKey + '_SERVICE_PORT'] = port
+        system.topology.containers[key].environment[upcaseKey + '_PORT'] = 'tcp://' + host + ':' + port
+
+        sharedEnv[upcaseKey + '_SERVICE_HOST'] = host
+        sharedEnv[upcaseKey + '_SERVICE_PORT'] = port
+        sharedEnv[upcaseKey + '_PORT'] = 'tcp://' + host + ':' + port
+      }
+      system.topology.containers[key].environment[upcaseKey + '_PORT_' + port + '_TCP'] = 'tcp://' + host + ':' + port
+      system.topology.containers[key].environment[upcaseKey + '_PORT_' + port + '_TCP_PROTO'] = 'tcp'
+      system.topology.containers[key].environment[upcaseKey + '_PORT_' + port + '_TCP_PORT'] = port
+      system.topology.containers[key].environment[upcaseKey + '_PORT_' + port + '_TCP_ADDR'] = host
+      sharedEnv[upcaseKey + '_PORT_' + port + '_TCP'] = 'tcp://' + host + ':' + port
+      sharedEnv[upcaseKey + '_PORT_' + port + '_TCP_PROTO'] = 'tcp'
+      sharedEnv[upcaseKey + '_PORT_' + port + '_TCP_PORT'] = port
+      sharedEnv[upcaseKey + '_PORT_' + port + '_TCP_ADDR'] = host
+    })
+  }
+
+
+
+  function regenerateEnvForContainer (system, key, sharedEnv) {
+    var upcaseKey = key.toUpperCase()
+    var host = system.topology.containers[key].host
 
     _.each(_.keys(system.topology.containers[key].ports), function (pkey) {
       var port = system.topology.containers[key].ports[pkey][0]
-
       system.topology.containers[key].environment['SERVICE_HOST'] = host
       system.topology.containers[key].environment['SERVICE_PORT'] = port
+
       if (!system.topology.containers[key].environment[upcaseKey + '_SERVICE_PORT']) {
         system.topology.containers[key].environment[upcaseKey + '_SERVICE_HOST'] = host
         system.topology.containers[key].environment[upcaseKey + '_SERVICE_PORT'] = port
@@ -94,6 +123,7 @@ module.exports = function () {
 
   return {
     generateEnvForContainer: generateEnvForContainer,
+    regenerateEnvForContainer: regenerateEnvForContainer,
     generateDnsForContainer: generateDnsForContainer
   }
 }
