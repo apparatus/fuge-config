@@ -50,6 +50,13 @@ module.exports = function () {
     var env = {}
     var block
 
+    if (typeof obj === 'object' && obj !== null) {
+      console.warn('\n objjj=... '+ Object.entries(obj))
+    } else {
+      console.warn('\n obj=... '+ obj)
+    }
+
+
     if (obj.env_file) {
       if (_.isArray(obj.env_file)) {
         _.each(obj.env_file, function (envFile) {

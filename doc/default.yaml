@@ -17,7 +17,7 @@ fuge_global:
     - /node_modules|\.git|\.log/mgi,
 
   # default group for all. unless custom groups are added to fuge.yml
-  group: default
+   group: default
 
   # run internal dns server with the following settigs
   dns: true
