@@ -51,9 +51,9 @@ module.exports = function () {
     var block
 
     if (typeof obj === 'object' && obj !== null) {
-      console.warn('\n objjj=... '+ Object.entries(obj))
+      console.warn('\n objjj=... ' + Object.entries(obj))
     } else {
-      console.warn('\n obj=... '+ obj)
+      console.warn('\n obj=... ' + obj)
     }
 
 
