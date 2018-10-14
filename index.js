@@ -319,6 +319,9 @@ module.exports = function () {
         }
       }
 
+
+
+
         // create environment block for this container
       env = ev.loadEnvFiles(yamlPath, system.topology.containers[key])
       if (system.topology.containers[key].environment) {
@@ -381,13 +384,25 @@ module.exports = function () {
       }
 
 
+        // set termination behaviour for this container to global default if not set
+        if (!system.topology.containers[key].hasOwnProperty('terminate')) {
+          system.topology.containers[key].terminate = system.global.terminate
+        }
+
+
         // auto generate environment block for this container if required
       if (!system.topology.containers[key].hasOwnProperty('auto_generate_environment')) {
         system.topology.containers[key].auto_generate_environment = system.global.auto_generate_environment
       }
+
+
+        // regenerate Kube env values of OTHER processes in changed process
+        _.each(_.keys(system.topology.containers), function (key) {
       if (system.topology.containers[key].auto_generate_environment) {
-        kubeEnv.regenerateEnvForContainer(system, key, sharedEnv)
+        kubeEnv.generateEnvForContainer(system, key, sharedEnv)
       }
+    })
+
 
         // set dns suffix for this container to global default if not set
       if (!system.topology.containers[key].dns_suffix) {
@@ -412,6 +427,10 @@ module.exports = function () {
       }
       // })
 
+
+
+
+
       // add in addtional external dns_entries if needed
       if (system.global.dns_external) {
         extDns.addExternalDns(system)
@@ -419,9 +438,9 @@ module.exports = function () {
 
       // merge the global shared env into each container if required
       if (system.global.auto_generate_environment) {
-        // _.each(_.keys(system.topology.containers), function (key) {
+        _.each(_.keys(system.topology.containers), function (key) {
         system.topology.containers[key].environment = _.merge(_.cloneDeep(sharedEnv), system.topology.containers[key].environment)
-        // })
+        })
       }
 
       // add a blank process block to each container
