@@ -93,7 +93,6 @@ module.exports = function () {
     }
 
     if (system.topology.containers && _.keys(system.topology.containers).length > 0) {
-      // _.each(_.keys(system.topology.containers), function (key) {
       result = v.validate(system.topology.containers[key], schemas.containerSchema)
       if (result.errors && result.errors.length > 0) {
         _.each(result.errors, function (error) {
@@ -111,7 +110,6 @@ module.exports = function () {
           console.warn('[' + key + '] will be disabled, as the path does not exist: ' + p)
         } else { system.topology.containers[key].status = 'enabled' }
       }
-      // })
     }
     cb(message.length > 0 ? message : null)
   }
@@ -136,7 +134,6 @@ module.exports = function () {
     if (!system.global.hasOwnProperty('max_restarts')) { system.global.max_restarts = 5 }
     if (!system.global.hasOwnProperty('group')) { system.global.group = 'default' }
     if (!system.global.hasOwnProperty('terminate')) { system.global.terminate = 'SIGKILL' }
-
   }
 
 
@@ -301,8 +298,6 @@ module.exports = function () {
     }
 
     if (system.topology.containers && _.keys(system.topology.containers).length > 0) {
-      // _.each(_.keys(system.topology.containers), function (key) {
-
         // auto assign a port number if rquired
       if (system.global.auto_generate_environment) {
         if (!system.topology.containers[key].ports || system.topology.containers[key].ports.length === 0) {
@@ -318,7 +313,6 @@ module.exports = function () {
           system.topology.containers[key].path = path.resolve(path.join(path.dirname(yamlPath), system.topology.containers[key].path))
         }
       }
-
 
 
 
@@ -385,9 +379,9 @@ module.exports = function () {
 
 
         // set termination behaviour for this container to global default if not set
-        if (!system.topology.containers[key].hasOwnProperty('terminate')) {
-          system.topology.containers[key].terminate = system.global.terminate
-        }
+      if (!system.topology.containers[key].hasOwnProperty('terminate')) {
+        system.topology.containers[key].terminate = system.global.terminate
+      }
 
 
         // auto generate environment block for this container if required
@@ -397,11 +391,11 @@ module.exports = function () {
 
 
         // regenerate Kube env values of OTHER processes in changed process
-        _.each(_.keys(system.topology.containers), function (key) {
-      if (system.topology.containers[key].auto_generate_environment) {
-        kubeEnv.generateEnvForContainer(system, key, sharedEnv)
-      }
-    })
+      _.each(_.keys(system.topology.containers), function (key) {
+        if (system.topology.containers[key].auto_generate_environment) {
+          kubeEnv.generateEnvForContainer(system, key, sharedEnv)
+        }
+      })
 
 
         // set dns suffix for this container to global default if not set
@@ -425,9 +419,6 @@ module.exports = function () {
         sharedEnv.DNS_SUFFIX = system.global.dns_suffix
         kubeEnv.generateDnsForContainer(system, key)
       }
-      // })
-
-
 
 
 
@@ -439,14 +430,12 @@ module.exports = function () {
       // merge the global shared env into each container if required
       if (system.global.auto_generate_environment) {
         _.each(_.keys(system.topology.containers), function (key) {
-        system.topology.containers[key].environment = _.merge(_.cloneDeep(sharedEnv), system.topology.containers[key].environment)
+          system.topology.containers[key].environment = _.merge(_.cloneDeep(sharedEnv), system.topology.containers[key].environment)
         })
       }
 
       // add a blank process block to each container
-      // _.each(_.keys(system.topology.containers), function (key) {
       system.topology.containers[key].process = { history: [], flags: {}, child: null, colour: null, monitor: null }
-      // })
     }
   }
 
@@ -477,7 +466,6 @@ module.exports = function () {
       yml = yaml.safeLoad(fs.readFileSync(yamlPath, 'utf8'))
       _.merge(system.topology.containers, inc.process(yamlPath, yml))
     } catch (ex) {
-      // console.log(ex)
       return cb(ex.message)
     }
 
@@ -503,27 +491,25 @@ module.exports = function () {
 
 
 
-  function reload (yamlPath, system, container, cb) {
+  function reload (system, container, cb) {
     var yml
     var key = container.name
-  // var system = { global: {}, topology: { containers: {} } }
+    var yamlPath = process.env.yamlPath
 
     try {
-      yml = yaml.safeLoad(fs.readFileSync(yamlPath, 'utf8'))
-      _.merge(system.topology.containers, inc.process(yamlPath, yml))
+      yml = yaml.safeLoad(fs.readFileSync(process.env.yamlPath, 'utf8'))
+      _.merge(system.topology.containers, inc.process(process.env.yamlPath, yml))
     } catch (ex) {
-    // console.log(ex)
+      console.log(ex)
       return cb(ex.message)
     }
 
     system.global = yml.fuge_global || {}
-  // _.each(_.keys(yml), function (key) {
     if (key !== 'fuge_global') {
       system.topology.containers[key] = yml[key]
       system.topology.containers[key].name = key
       system.topology.containers[key].specific = {}
     }
-  // })
 
     revalidateInput(yamlPath, system, key, function (err) {
       if (err) { return cb(err) }

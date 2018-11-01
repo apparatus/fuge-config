@@ -35,7 +35,7 @@ module.exports = function () {
     var host = system.topology.containers[key].host
 
     _.each(_.keys(system.topology.containers[key].ports), function (pkey) {
-      system.topology.containers[key].environment={}
+      system.topology.containers[key].environment = {}
       var port = system.topology.containers[key].ports[pkey][0]
       system.topology.containers[key].environment['SERVICE_HOST'] = host
       system.topology.containers[key].environment['SERVICE_PORT'] = port
