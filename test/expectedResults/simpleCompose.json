@@ -24,6 +24,8 @@
     "delay_start": 0,
     "restart_on_error": false,
     "max_restarts": 5,
+    "group": "default",
+    "terminate": "SIGKILL",
     "host": "127.0.0.1"
   },
   "topology": {
@@ -31,7 +33,6 @@
       "service_2": {
         "name": "service_2",
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/composeSimpleV1/service_2",
         "run": "node index.js",
         "environment": {
           "SERVICE_2_SERVICE_HOST": "127.0.0.1",
@@ -77,6 +78,7 @@
           "./s2.env",
           "./s22.env"
         ],
+        "status": "enabled",
         "ports": {
           "main": [
             "10000",
@@ -94,6 +96,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "",
         "dns_namespace": "",
@@ -167,6 +170,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "",
         "dns_namespace": "",
@@ -181,7 +185,6 @@
       },
       "service_1": {
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/composeSimpleV1/service_1",
         "env_file": "./s1.env",
         "run": "node index.js --eval debug ",
         "ports": {
@@ -233,6 +236,7 @@
         },
         "name": "service_1",
         "specific": {},
+        "status": "enabled",
         "host": "127.0.0.1",
         "tail": true,
         "monitor": true,
@@ -244,6 +248,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "",
         "dns_namespace": "",

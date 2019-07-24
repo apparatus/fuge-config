@@ -24,6 +24,8 @@
     "delay_start": 0,
     "restart_on_error": false,
     "max_restarts": 5,
+    "group": "default",
+    "terminate": "SIGKILL",
     "host": "127.0.0.1",
     "dns": {
       "A": {
@@ -68,12 +70,11 @@
     "containers": {
       "pkgapi": {
         "type": "node",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/bugfix/case1/dev/search-api/services/sh-api",
         "run": "node index.js",
         "ports": {
           "pkgapi": [
             "8081",
-            null
+            {}
           ]
         },
         "environment": {
@@ -119,6 +120,7 @@
         },
         "name": "pkgapi",
         "specific": {},
+        "status": "enabled",
         "host": "127.0.0.1",
         "tail": true,
         "monitor": true,
@@ -130,6 +132,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "pkg",
@@ -144,16 +147,16 @@
       },
       "pkggiql": {
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/bugfix/case1/dev/search-api/tools/sh-giql",
         "run": "node server.js",
         "ports": {
           "pkggiql": [
             "8082",
-            null
+            {}
           ]
         },
         "name": "pkggiql",
         "specific": {},
+        "status": "enabled",
         "environment": {
           "PKGAPI_SERVICE_HOST": "127.0.0.1",
           "PKGAPI_SERVICE_PORT": "8081",
@@ -205,6 +208,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "pkg",
@@ -223,7 +227,7 @@
         "ports": {
           "vpsvc": [
             "8080",
-            null
+            {}
           ]
         },
         "name": "vpsvc",
@@ -278,6 +282,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "pkg",
@@ -296,7 +301,7 @@
         "ports": {
           "redis": [
             "6379",
-            null
+            {}
           ]
         },
         "name": "redis",
@@ -352,6 +357,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "pkg",

@@ -16,6 +16,7 @@
 
 var path = require('path')
 var test = require('tap').test
+var omitDeep = require('omit-deep')
 var loader = require('../index.js')()
 
 
@@ -24,6 +25,7 @@ test('load good config', function (t) {
 
   var expected = require(path.join(__dirname, '/expectedResults/config1.json'))
   loader.load(path.join(__dirname, '/fixture/config1.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
   })
@@ -35,6 +37,7 @@ test('load blank config', function (t) {
 
   var expected = require(path.join(__dirname, '/expectedResults/blank.json'))
   loader.load(path.join(__dirname, '/fixture/blank.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
   })
@@ -46,6 +49,7 @@ test('load config with no autogeneration of environment', function (t) {
 
   var expected = require(path.join(__dirname, '/expectedResults/noautogen.json'))
   loader.load(path.join(__dirname, '/fixture/noautogen.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
   })
@@ -57,6 +61,7 @@ test('load config with no default overrides', function (t) {
 
   var expected = require(path.join(__dirname, '/expectedResults/nodefaults.json'))
   loader.load(path.join(__dirname, '/fixture/nodefaults.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
   })
@@ -68,6 +73,7 @@ test('test missing dns settings', function (t) {
 
   var expected = require(path.join(__dirname, '/expectedResults/missingdns.json'))
   loader.load(path.join(__dirname, '/fixture/missingdns.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
   })

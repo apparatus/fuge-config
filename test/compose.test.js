@@ -16,6 +16,7 @@
 
 var path = require('path')
 var test = require('tap').test
+var omitDeep = require('omit-deep')
 var loader = require('../index.js')()
 
 
@@ -25,6 +26,7 @@ test('simple configuration and env file load and interpolation', function (t) {
   process.env.NODE_ENV = 'debug'
   var expected = require(path.join(__dirname, '/expectedResults/simpleCompose.json'))
   loader.load(path.join(__dirname, 'fixture', 'composeSimpleV1', 'fuge.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(err, null, 'check no errors')
     t.deepEqual(system, expected, 'check system matches expected')
   })
@@ -36,6 +38,7 @@ test('complex port configuration', function (t) {
 
   var expected = require(path.join(__dirname, '/expectedResults/complexPorts.json'))
   loader.load(path.join(__dirname, 'fixture', 'composeV1', 'fuge.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(err, null, 'check no errors')
     t.deepEqual(system, expected, 'check system matches expected')
   })
@@ -47,6 +50,7 @@ test('complex port configuration V2 syntax', function (t) {
 
   var expected = require(path.join(__dirname, '/expectedResults/complexPortsV2.json'))
   loader.load(path.join(__dirname, 'fixture', 'composeV2', 'fuge.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(err, null, 'check no errors')
     t.deepEqual(system, expected, 'check system matches expected')
   })
@@ -58,6 +62,7 @@ test('complex port configuration V3 syntax', function (t) {
 
   var expected = require(path.join(__dirname, '/expectedResults/complexPortsV3.json'))
   loader.load(path.join(__dirname, 'fixture', 'composeV3', 'fuge.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(err, null, 'check no errors')
     t.deepEqual(system, expected, 'check system matches expected')
   })

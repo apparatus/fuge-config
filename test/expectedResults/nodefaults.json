@@ -21,6 +21,8 @@
     "container_engine_url": "",
     "dns_host": "0.0.0.0",
     "dns_port": 53053,
+    "group": "default",
+    "terminate": "SIGKILL",
     "dns": {
       "A": {
         "frontend.testns.svc.cluster.local": {
@@ -53,7 +55,6 @@
         "max_restarts": 5,
         "dns_enabled": true,
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/frontend",
         "build": "sh build.sh",
         "test": "npm test",
         "run": "npm start",
@@ -82,16 +83,18 @@
         "ports": {
           "main": [
             "3000",
-            null
+            {}
           ],
           "tcp": [
             "3001",
-            null
+            {}
           ]
         },
         "name": "frontend",
         "specific": {},
+        "status": "enabled",
         "delay_start": 1,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "testns",
