@@ -21,6 +21,8 @@
     "restart_on_error": true,
     "max_restarts": 5,
     "container_engine_url": "",
+    "group": "default",
+    "terminate": "SIGKILL",
     "dns": {
       "A": {
         "frontend.testns.svc.cluster.local": {
@@ -54,7 +56,6 @@
       "frontend": {
         "delay_start": 5,
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/frontend",
         "build": "sh build.sh",
         "test": "npm test",
         "run": "npm start",
@@ -66,15 +67,16 @@
         "ports": {
           "main": [
             "3000",
-            null
+            {}
           ],
           "tcp": [
             "3001",
-            null
+            {}
           ]
         },
         "name": "frontend",
         "specific": {},
+        "status": "enabled",
         "tail": true,
         "monitor": true,
         "monitor_excludes": [
@@ -82,6 +84,7 @@
         ],
         "restart_on_error": true,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": false,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "testns",
@@ -96,7 +99,6 @@
       },
       "service": {
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/service",
         "build": "sh build.sh",
         "test": "npm test",
         "run": "npm start",
@@ -106,6 +108,7 @@
         },
         "name": "service",
         "specific": {},
+        "status": "enabled",
         "ports": {},
         "host": "wibble",
         "tail": true,
@@ -116,6 +119,7 @@
         "delay_start": 1,
         "restart_on_error": true,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": false,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "testns",
@@ -136,7 +140,7 @@
         "ports": {
           "http": [
             "1000080",
-            null
+            {}
           ]
         },
         "name": "mongo",
@@ -153,6 +157,7 @@
         "delay_start": 1,
         "restart_on_error": true,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": false,
         "dns_suffix": "svc.cluster.local",
         "dns_enabled": true,

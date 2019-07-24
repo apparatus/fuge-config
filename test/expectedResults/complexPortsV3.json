@@ -19,6 +19,8 @@
     "delay_start": 0,
     "restart_on_error": false,
     "max_restarts": 5,
+    "group": "default",
+    "terminate": "SIGKILL",
     "host": "127.0.0.1",
     "dns": {
       "A": {
@@ -237,36 +239,35 @@
       "service_2": {
         "name": "service_2",
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/composeV3/service_2",
         "run": "node index.js",
         "ports": {
           "service_2": [
             "3000",
-            null
+            {}
           ],
           "service_22": [
             "3000",
-            null
+            {}
           ],
           "service_23": [
             "3001",
-            null
+            {}
           ],
           "service_24": [
             "3002",
-            null
+            {}
           ],
           "service_25": [
             "3003",
-            null
+            {}
           ],
           "service_26": [
             "3004",
-            null
+            {}
           ],
           "service_27": [
             "3005",
-            null
+            {}
           ],
           "service_28": [
             "8000",
@@ -290,23 +291,23 @@
           ],
           "service_213": [
             "7001",
-            null
+            {}
           ],
           "service_214": [
             "7002",
-            null
+            {}
           ],
           "service_215": [
             "7003",
-            null
+            {}
           ],
           "service_216": [
             "7004",
-            null
+            {}
           ],
           "service_217": [
             "7005",
-            null
+            {}
           ],
           "service_218": [
             "5000",
@@ -526,6 +527,7 @@
           "SERVICE_PORT": "5010"
         },
         "env_file": "./s2.env",
+        "status": "enabled",
         "host": "127.0.0.1",
         "tail": true,
         "monitor": true,
@@ -537,6 +539,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "micro",
@@ -552,36 +555,35 @@
       "service_4": {
         "name": "service_4",
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/composeV3/service_4",
         "run": "node index.js",
         "ports": {
           "service_4": [
             "3000",
-            null
+            {}
           ],
           "service_42": [
             "3000",
-            null
+            {}
           ],
           "service_43": [
             "3001",
-            null
+            {}
           ],
           "service_44": [
             "3002",
-            null
+            {}
           ],
           "service_45": [
             "3003",
-            null
+            {}
           ],
           "service_46": [
             "3004",
-            null
+            {}
           ],
           "service_47": [
             "3005",
-            null
+            {}
           ]
         },
         "environment": {
@@ -762,6 +764,7 @@
           "./s4_one.env",
           "./s4_two.env"
         ],
+        "status": "enabled",
         "host": "127.0.0.1",
         "tail": true,
         "monitor": true,
@@ -773,6 +776,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "micro",
@@ -792,7 +796,7 @@
         "ports": {
           "main": [
             "10000",
-            null
+            {}
           ]
         },
         "environment": {
@@ -973,6 +977,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "micro",
@@ -1173,6 +1178,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "micro",
@@ -1187,12 +1193,11 @@
       },
       "service_1": {
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/composeV3/service_1",
         "run": "node index.js",
         "ports": {
           "main": [
             "8080",
-            null
+            {}
           ]
         },
         "environment": {
@@ -1365,6 +1370,7 @@
         },
         "name": "service_1",
         "specific": {},
+        "status": "enabled",
         "host": "127.0.0.1",
         "tail": true,
         "monitor": true,
@@ -1376,6 +1382,7 @@
         "delay_start": 0,
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "micro",

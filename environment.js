@@ -19,7 +19,6 @@ var path = require('path')
 var _ = require('lodash')
 var EOL = require('os').EOL
 
-
 module.exports = function () {
 
   function loadEnvFile (root, envFile) {

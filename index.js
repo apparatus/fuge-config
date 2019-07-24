@@ -69,14 +69,15 @@ module.exports = function () {
             p = path.resolve(path.join(path.dirname(yamlPath), system.topology.containers[key].path))
           }
           if (!fs.existsSync(p)) {
-            message += 'element: ' + key + ', path does not exist: ' + p + '\n'
-          }
+            system.topology.containers[key].path = null
+            system.topology.containers[key].status = 'disabled'
+            console.warn('[' + key + '] will be disabled, as the path does not exist: ' + p)
+          } else { system.topology.containers[key].status = 'enabled' }
         }
       })
     }
     cb(message.length > 0 ? message : null)
   }
-
 
 
   function setGlobalDefaults (system) {
@@ -95,6 +96,8 @@ module.exports = function () {
     if (!system.global.hasOwnProperty('delay_start')) { system.global.delay_start = 0 }
     if (!system.global.hasOwnProperty('restart_on_error')) { system.global.restart_on_error = false }
     if (!system.global.hasOwnProperty('max_restarts')) { system.global.max_restarts = 5 }
+    if (!system.global.hasOwnProperty('group')) { system.global.group = 'default' }
+    if (!system.global.hasOwnProperty('terminate')) { system.global.terminate = 'SIGKILL' }
   }
 
 
@@ -152,6 +155,7 @@ module.exports = function () {
 
         // set hostname for this container to global default if not set
         if (!system.topology.containers[key].host) {
+
           system.topology.containers[key].host = system.global.host
         }
 
@@ -189,6 +193,11 @@ module.exports = function () {
           system.topology.containers[key].max_restarts = system.global.max_restarts
         }
 
+
+        // set termination behaviour for this container to global default if not set
+        if (!system.topology.containers[key].hasOwnProperty('terminate')) {
+          system.topology.containers[key].terminate = system.global.terminate
+        }
 
         // auto generate environment block for this container if required
         if (!system.topology.containers[key].hasOwnProperty('auto_generate_environment')) {
@@ -241,7 +250,6 @@ module.exports = function () {
   }
 
 
-
   function buildGlobalEnvironment (yamlPath, system) {
     system.global.environment = ev.buildEnvironmentBlock(system.global.environment)
     system.global.environment = _.merge(system.global.environment, ev.loadEnvFiles(yamlPath, system.global))
@@ -249,7 +257,6 @@ module.exports = function () {
       system.global.host = '127.0.0.1'
     }
   }
-
 
 
   function load (yamlPath, cb) {
@@ -260,7 +267,6 @@ module.exports = function () {
       yml = yaml.safeLoad(fs.readFileSync(yamlPath, 'utf8'))
       _.merge(system.topology.containers, inc.process(yamlPath, yml))
     } catch (ex) {
-      // console.log(ex)
       return cb(ex.message)
     }
 
@@ -281,8 +287,8 @@ module.exports = function () {
       ev.interpolate(system)
       cb(null, system)
     })
+    return system
   }
-
 
 
   return {

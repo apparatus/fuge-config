@@ -16,6 +16,7 @@
 
 var fs = require('fs')
 var path = require('path')
+var omitDeep = require('omit-deep')
 var loader = require('../index.js')()
 
 function reset (name, output) {
@@ -24,6 +25,7 @@ function reset (name, output) {
       console.log('ERROR:')
       console.log(err)
     } else {
+      system = omitDeep(system, ['path'])
       fs.writeFile(path.join(__dirname, '/expectedResults/' + output + '.json'), JSON.stringify(system, null, 2), 'utf8', function (err) {
         if (err) {
           console.log('ERROR:')
@@ -45,7 +47,10 @@ reset('nodefaults', 'nodefaults')
 reset('composeV1/fuge', 'complexPorts')
 reset('composeV2/fuge', 'complexPortsV2')
 reset('composeV3/fuge', 'complexPortsV3')
+reset('externalDns', 'externalDns')
+reset('externalDnsBad', 'externalDnsBad')
 reset('bugfix/case1/fuge/fuge', 'apionly')
 
 process.env.NODE_ENV = 'debug'
 reset('composeSimpleV1/fuge', 'simpleCompose')
+

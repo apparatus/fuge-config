@@ -28,6 +28,8 @@
     "delay_start": 0,
     "restart_on_error": false,
     "max_restarts": 5,
+    "group": "default",
+    "terminate": "SIGKILL",
     "host": "127.0.0.1",
     "dns": {
       "A": {
@@ -61,7 +63,6 @@
       "frontend": {
         "delay_start": 5,
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/frontend",
         "build": "sh build.sh",
         "test": "npm test",
         "run": "npm start",
@@ -94,15 +95,16 @@
         "ports": {
           "main": [
             "3000",
-            null
+            {}
           ],
           "tcp": [
             "3001",
-            null
+            {}
           ]
         },
         "name": "frontend",
         "specific": {},
+        "status": "enabled",
         "tail": true,
         "monitor": true,
         "monitor_excludes": [
@@ -112,6 +114,7 @@
         ],
         "restart_on_error": false,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "svc.cluster.local",
         "dns_namespace": "pkg",
@@ -127,4 +130,3 @@
     }
   }
 }
-

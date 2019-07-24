@@ -21,6 +21,8 @@
     "dns_suffix": "",
     "dns_namespace": "",
     "max_restarts": 5,
+    "group": "default",
+    "terminate": "SIGKILL",
     "dns": {
       "A": {
         "frontend": {
@@ -54,7 +56,6 @@
       "frontend": {
         "delay_start": 5,
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/frontend",
         "build": "sh build.sh",
         "test": "npm test",
         "run": "npm start",
@@ -89,15 +90,16 @@
         "ports": {
           "main": [
             "3000",
-            null
+            {}
           ],
           "tcp": [
             "3001",
-            null
+            {}
           ]
         },
         "name": "frontend",
         "specific": {},
+        "status": "enabled",
         "tail": true,
         "monitor": true,
         "monitor_excludes": [
@@ -105,6 +107,7 @@
         ],
         "restart_on_error": true,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "",
         "dns_namespace": "",
@@ -119,7 +122,6 @@
       },
       "service": {
         "type": "process",
-        "path": "/Users/pelger/work/oss/apparatus/fugedir/fuge-config/test/fixture/service",
         "build": "sh build.sh",
         "test": "npm test",
         "run": "npm start",
@@ -152,10 +154,11 @@
         },
         "name": "service",
         "specific": {},
+        "status": "enabled",
         "ports": {
           "main": [
             "20000",
-            null
+            {}
           ]
         },
         "host": "wibble",
@@ -167,6 +170,7 @@
         "delay_start": 1,
         "restart_on_error": true,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "auto_generate_environment": true,
         "dns_suffix": "",
         "dns_namespace": "",
@@ -189,7 +193,7 @@
         "ports": {
           "http": [
             "1000080",
-            null
+            {}
           ]
         },
         "name": "mongo",
@@ -228,6 +232,7 @@
         "delay_start": 1,
         "restart_on_error": true,
         "max_restarts": 5,
+        "terminate": "SIGKILL",
         "dns_suffix": "",
         "process": {
           "history": [],

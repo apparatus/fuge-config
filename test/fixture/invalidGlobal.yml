@@ -1,12 +1,11 @@
 fuge_global:
-  run_containers: true
+  run_containers: 5
   tail: true
   monitor: true
   monitor_excludes:
     - '**/node_modules/**'
     - '**/.git/**'
     - '**/*.log'
-  wibble: bibble
 service_1:
   type: process 
   path: ./service_1

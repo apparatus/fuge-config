@@ -16,6 +16,7 @@
 
 var path = require('path')
 var test = require('tap').test
+var omitDeep = require('omit-deep')
 var loader = require('../index.js')()
 
 
@@ -24,6 +25,7 @@ test('good external DNS', function (t) {
 
   var expected = require(path.join(__dirname, '/expectedResults/externalDns.json'))
   loader.load(path.join(__dirname, '/fixture/externalDns.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
   })
@@ -35,6 +37,7 @@ test('bad external DNS', function (t) {
 
   var expected = require(path.join(__dirname, '/expectedResults/externalDnsBad.json'))
   loader.load(path.join(__dirname, '/fixture/externalDnsBad.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
   })

@@ -32,14 +32,15 @@ module.exports = function () {
 
   function generateEnvForContainer (system, key, sharedEnv) {
     var upcaseKey = key.toUpperCase()
-
     var host = system.topology.containers[key].host
 
     _.each(_.keys(system.topology.containers[key].ports), function (pkey) {
-      var port = system.topology.containers[key].ports[pkey][0]
+      // system.topology.containers[key].environment = {}
 
+      var port = system.topology.containers[key].ports[pkey][0]
       system.topology.containers[key].environment['SERVICE_HOST'] = host
       system.topology.containers[key].environment['SERVICE_PORT'] = port
+
       if (!system.topology.containers[key].environment[upcaseKey + '_SERVICE_PORT']) {
         system.topology.containers[key].environment[upcaseKey + '_SERVICE_HOST'] = host
         system.topology.containers[key].environment[upcaseKey + '_SERVICE_PORT'] = port

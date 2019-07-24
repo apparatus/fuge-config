@@ -29,7 +29,6 @@ module.exports.globalSchema = {
       items: {
         type: 'string'
       }
-
     },
     dns_enabled: { type: 'boolean' },
     dns_host: { type: 'string' },

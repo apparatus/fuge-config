@@ -16,6 +16,7 @@
 
 var path = require('path')
 var test = require('tap').test
+var omitDeep = require('omit-deep')
 var loader = require('../index.js')()
 
 
@@ -24,6 +25,7 @@ test('global environment block', function (t) {
 
   var expected = require(path.join(__dirname, '/expectedResults/apionly.json'))
   loader.load(path.join(__dirname, '/fixture/bugfix/case1/fuge/fuge.yml'), function (err, system) {
+    system = omitDeep(system, ['path'])
     t.equal(null, err, 'check err is null')
     t.deepEqual(system, expected, 'check system matches expected')
   })
