@@ -53,6 +53,9 @@ module.exports.globalSchema = {
         type: 'string',
         pattern: '^[A-Za-z0-9_\{\}\$]+=.+$'
       }
+    },
+    onExit: {
+      type: 'string'
     }
   }
 }
