@@ -46,6 +46,6 @@
   "dependencies": {
     "js-yaml": "^3.8.1",
     "jsonschema": "^1.1.0",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.19"
   }
 }
